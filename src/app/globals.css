@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --brand: #8B6914;
+  --brand: #F2B609;
 }
 
 html {
@@ -11,8 +11,8 @@ html {
 }
 
 body {
-  background-color: #1C1F1A;
-  color: #E8DCC8;
+  background-color: #052D24;
+  color: #26C0BD;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -23,14 +23,14 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #1C1F1A;
+  background: #052D24;
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 9999px;
-  background: #3D4A35;
+  background: #0F4D3E;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #4A7C59;
+  background: #40BA85;
 }
 
 /* Focus ring */
@@ -38,9 +38,9 @@ body {
   @apply outline-none ring-2 ring-desert-gold ring-offset-2 ring-offset-desert-bg;
 }
 
-/* Date input calendar icon color */
+/* Date input calendar icon — tinted to match Desert Glow */
 input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(0.7) sepia(1) saturate(2) hue-rotate(5deg);
+  filter: invert(1) sepia(1) saturate(3) hue-rotate(350deg) brightness(1.1);
   cursor: pointer;
   opacity: 0.7;
 }

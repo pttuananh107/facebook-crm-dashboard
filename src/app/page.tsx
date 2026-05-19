@@ -8,7 +8,7 @@ export default function Home() {
       <header className="sticky top-0 z-10 border-b border-sage bg-desert-bg/90 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 sm:px-6">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-desert-gold">
-            <Zap size={16} className="text-desert-bg" fill="#1C1F1A" />
+            <Zap size={16} className="text-desert-bg" fill="#052D24" />
           </div>
           <div>
             <h1 className="text-sm font-bold leading-none text-desert-text">

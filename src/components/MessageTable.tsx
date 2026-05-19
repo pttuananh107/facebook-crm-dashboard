@@ -118,7 +118,7 @@ export function MessageTable() {
                       <div className="text-desert-text/80 font-mono text-xs">{formatDate(msg.received_at ?? '')}</div>
                     </td>
                     <td className="whitespace-nowrap px-4 py-3">
-                      <span className="rounded-md bg-sage/40 px-2 py-0.5 font-mono text-xs text-desert-text/70">
+                      <span className="rounded-md bg-white/10 px-2 py-0.5 font-mono text-xs text-white/80 border border-white/10">
                         {msg.sender_name ?? msg.sender_id}
                       </span>
                     </td>

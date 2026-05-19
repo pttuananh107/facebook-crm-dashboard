@@ -31,7 +31,7 @@ export function useMessages(
     }
 
     if (search.trim()) {
-      query = query.ilike("content", `%${search.trim()}%`);
+      query = query.ilike("text", `%${search.trim()}%`);
     }
 
     if (dateRange.from) {

@@ -11,32 +11,42 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          DEFAULT: "#8B6914",
-          dark: "#6B5010",
+          DEFAULT: "#F2B609",
+          dark: "#C99500",
         },
+        // Cactus Night — main bg / darkest surface
         desert: {
-          bg: "#1C1F1A",
-          text: "#E8DCC8",
-          border: "#3D4A35",
-          gold: "#8B6914",
-          "gold-dim": "#6B5010",
-          surface: "#252820",
-          "surface-2": "#2E3228",
+          bg: "#052D24",
+          text: "#26C0BD",       // Lagoon Bloom
+          border: "#0F4D3E",
+          gold: "#F2B609",       // Desert Glow
+          "gold-dim": "#C99500",
+          surface: "#0A3D32",    // slightly lighter than bg
+          "surface-2": "#0F4D3E",
         },
+        // Cactus Vein green
         cactus: {
-          DEFAULT: "#4A7C59",
-          dim: "#3A6247",
-          light: "#5E9970",
+          DEFAULT: "#40BA85",
+          dim: "#2E8A60",
+          light: "#5DCCA0",
         },
+        // Kept for error states only
         terracotta: {
           DEFAULT: "#C4511A",
           dim: "#9E4115",
           light: "#D96830",
         },
+        // Border / divider dark teal-green
         sage: {
-          DEFAULT: "#3D4A35",
-          light: "#4E5E44",
+          DEFAULT: "#0F4D3E",
+          light: "#1A5E4C",
         },
+        // Desert Radiance — bright highlight yellow
+        radiance: "#FFEF38",
+        // Lagoon Bloom — alias for quick use
+        lagoon: "#26C0BD",
+        // Night — alias for solid dark backgrounds
+        night: "#052D24",
       },
       animation: {
         "fade-in": "fadeIn 0.3s ease-in-out",
