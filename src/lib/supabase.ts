@@ -13,5 +13,6 @@ export interface Message {
   sender_id: string;
   sender_name?: string;
   content: string;
+  text?: string;
   score: Score;
 }
