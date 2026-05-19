@@ -12,19 +12,19 @@ export function SearchBar({ value, onChange }: SearchBarProps) {
     <div className="relative flex-1 min-w-[200px]">
       <Search
         size={16}
-        className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none"
+        className="absolute left-3 top-1/2 -translate-y-1/2 text-desert-text/40 pointer-events-none"
       />
       <input
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Search messages..."
-        className="w-full rounded-lg border border-slate-700 bg-slate-800 py-2 pl-9 pr-9 text-sm text-slate-200 placeholder-slate-500 outline-none transition focus:border-brand focus:ring-1 focus:ring-brand"
+        className="w-full rounded-lg border border-sage bg-desert-surface py-2 pl-9 pr-9 text-sm text-desert-text placeholder-desert-text/30 outline-none transition focus:border-desert-gold focus:ring-1 focus:ring-desert-gold"
       />
       {value && (
         <button
           onClick={() => onChange("")}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-desert-text/40 hover:text-desert-text transition"
         >
           <X size={14} />
         </button>

@@ -11,8 +11,31 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          DEFAULT: "#1877f2",
-          dark: "#145dbf",
+          DEFAULT: "#8B6914",
+          dark: "#6B5010",
+        },
+        desert: {
+          bg: "#1C1F1A",
+          text: "#E8DCC8",
+          border: "#3D4A35",
+          gold: "#8B6914",
+          "gold-dim": "#6B5010",
+          surface: "#252820",
+          "surface-2": "#2E3228",
+        },
+        cactus: {
+          DEFAULT: "#4A7C59",
+          dim: "#3A6247",
+          light: "#5E9970",
+        },
+        terracotta: {
+          DEFAULT: "#C4511A",
+          dim: "#9E4115",
+          light: "#D96830",
+        },
+        sage: {
+          DEFAULT: "#3D4A35",
+          light: "#4E5E44",
         },
       },
       animation: {

@@ -9,20 +9,20 @@ const config: Record<Score, { label: string; classes: string; dot: string }> = {
   Hot: {
     label: "Hot",
     classes:
-      "bg-red-500/20 text-red-400 border border-red-500/30 ring-1 ring-red-500/20",
-    dot: "bg-red-400",
+      "bg-terracotta/20 text-terracotta-light border border-terracotta/30 ring-1 ring-terracotta/20",
+    dot: "bg-terracotta",
   },
   Warm: {
     label: "Warm",
     classes:
-      "bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 ring-1 ring-yellow-500/20",
-    dot: "bg-yellow-400",
+      "bg-desert-gold/20 text-desert-gold border border-desert-gold/30 ring-1 ring-desert-gold/20",
+    dot: "bg-desert-gold",
   },
   Cold: {
     label: "Cold",
     classes:
-      "bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 ring-1 ring-cyan-500/20",
-    dot: "bg-cyan-400",
+      "bg-cactus/20 text-cactus-light border border-cactus/30 ring-1 ring-cactus/20",
+    dot: "bg-cactus",
   },
 };
 

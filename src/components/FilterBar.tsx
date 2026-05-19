@@ -15,22 +15,22 @@ const FILTERS: { value: FilterValue; label: string; activeClass: string }[] = [
   {
     value: "All",
     label: "All",
-    activeClass: "bg-slate-600 text-white border-slate-500",
+    activeClass: "bg-sage text-desert-text border-sage-light",
   },
   {
     value: "Hot",
-    label: "Hot",
-    activeClass: "bg-red-600 text-white border-red-500",
+    label: "🔥 Hot",
+    activeClass: "bg-terracotta text-desert-text border-terracotta-light",
   },
   {
     value: "Warm",
-    label: "Warm",
-    activeClass: "bg-yellow-500 text-white border-yellow-400",
+    label: "☀️ Warm",
+    activeClass: "bg-desert-gold text-desert-bg border-desert-gold",
   },
   {
     value: "Cold",
-    label: "Cold",
-    activeClass: "bg-cyan-600 text-white border-cyan-500",
+    label: "🌵 Cold",
+    activeClass: "bg-cactus text-desert-text border-cactus-light",
   },
 ];
 
@@ -45,7 +45,7 @@ export function FilterBar({ active, counts, onChange }: FilterBarProps) {
             "inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-all duration-150",
             active === value
               ? activeClass
-              : "border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white"
+              : "border-sage bg-desert-surface text-desert-text/70 hover:bg-desert-surface-2 hover:text-desert-text"
           )}
         >
           {label}
@@ -53,8 +53,8 @@ export function FilterBar({ active, counts, onChange }: FilterBarProps) {
             className={clsx(
               "rounded-full px-1.5 py-0.5 text-xs font-bold tabular-nums",
               active === value
-                ? "bg-white/20 text-white"
-                : "bg-slate-700 text-slate-400"
+                ? "bg-black/20 text-white"
+                : "bg-sage/50 text-desert-text/60"
             )}
           >
             {counts[value] ?? 0}

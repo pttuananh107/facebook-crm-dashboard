@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --brand: #1877f2;
+  --brand: #8B6914;
 }
 
 html {
@@ -11,7 +11,10 @@ html {
 }
 
 body {
-  @apply bg-slate-950 text-slate-100 antialiased;
+  background-color: #1C1F1A;
+  color: #E8DCC8;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Custom scrollbar */
@@ -20,13 +23,27 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  @apply bg-slate-900;
+  background: #1C1F1A;
 }
 ::-webkit-scrollbar-thumb {
-  @apply rounded-full bg-slate-700 hover:bg-slate-600;
+  border-radius: 9999px;
+  background: #3D4A35;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4A7C59;
 }
 
 /* Focus ring */
 *:focus-visible {
-  @apply outline-none ring-2 ring-brand ring-offset-2 ring-offset-slate-950;
+  @apply outline-none ring-2 ring-desert-gold ring-offset-2 ring-offset-desert-bg;
+}
+
+/* Date input calendar icon color */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.7) sepia(1) saturate(2) hue-rotate(5deg);
+  cursor: pointer;
+  opacity: 0.7;
+}
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
 }
