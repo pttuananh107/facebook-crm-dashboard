@@ -11,6 +11,7 @@ export interface Message {
   id: string | number;
   created_at: string;
   sender_id: string;
+  sender_name?: string;
   content: string;
   score: Score;
 }
