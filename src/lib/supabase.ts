@@ -15,4 +15,5 @@ export interface Message {
   content: string;
   text?: string;
   score: Score;
+  received_at?: string;
 }
