@@ -9,13 +9,8 @@ import { FilterBar } from "./FilterBar";
 import { SearchBar } from "./SearchBar";
 import clsx from "clsx";
 
-function formatDate(iso: string): { date: string; time: string } {
-  const d = new Date(iso);
-  const tz = { timeZone: "Asia/Ho_Chi_Minh" };
-  return {
-    date: d.toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric", ...tz }),
-    time: d.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit", second: "2-digit", ...tz }),
-  };
+function formatDate(iso: string): string {
+  return new Date(iso).toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" });
 }
 
 export function MessageTable() {
@@ -109,7 +104,6 @@ export function MessageTable() {
               </thead>
               <tbody>
                 {messages.map((msg, idx) => {
-                  const { date, time } = formatDate(msg.created_at);
                   return (
                     <tr
                       key={msg.id}
@@ -119,8 +113,7 @@ export function MessageTable() {
                       )}
                     >
                       <td className="whitespace-nowrap px-4 py-3">
-                        <div className="text-slate-200 font-mono text-xs">{time}</div>
-                        <div className="text-slate-500 font-mono text-xs">{date}</div>
+                        <div className="text-slate-200 font-mono text-xs">{formatDate(msg.received_at)}</div>
                       </td>
                       <td className="whitespace-nowrap px-4 py-3">
                         <span className="rounded-md bg-slate-700/60 px-2 py-0.5 font-mono text-xs text-slate-300">
