@@ -113,7 +113,7 @@ export function MessageTable() {
                       )}
                     >
                       <td className="whitespace-nowrap px-4 py-3">
-                        <div className="text-slate-200 font-mono text-xs">{formatDate(msg.received_at)}</div>
+                        <div className="text-slate-200 font-mono text-xs">{formatDate(msg.received_at ?? '')}</div>
                       </td>
                       <td className="whitespace-nowrap px-4 py-3">
                         <span className="rounded-md bg-slate-700/60 px-2 py-0.5 font-mono text-xs text-slate-300">
