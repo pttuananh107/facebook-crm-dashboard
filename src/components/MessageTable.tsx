@@ -11,9 +11,10 @@ import clsx from "clsx";
 
 function formatDate(iso: string): { date: string; time: string } {
   const d = new Date(iso);
+  const tz = { timeZone: "Asia/Ho_Chi_Minh" };
   return {
-    date: d.toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric" }),
-    time: d.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit", second: "2-digit" }),
+    date: d.toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric", ...tz }),
+    time: d.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit", second: "2-digit", ...tz }),
   };
 }
 
@@ -61,7 +62,7 @@ export function MessageTable() {
       <div className="flex items-center gap-4 text-xs text-slate-500">
         <span className="flex items-center gap-1.5">
           <Clock size={12} />
-          Last updated: {lastRefreshed.toLocaleTimeString("vi-VN")}
+          Last updated: {lastRefreshed.toLocaleTimeString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" })}
         </span>
         <span className="flex items-center gap-1.5">
           <span className="inline-block h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse-dot" />
