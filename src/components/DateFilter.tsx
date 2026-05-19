@@ -24,32 +24,19 @@ function daysAgoStr(days: number) {
 }
 
 const QUICK: { label: string; getDates: () => DateRange }[] = [
-  {
-    label: "Hôm nay",
-    getDates: () => ({ from: todayStr(), to: todayStr() }),
-  },
-  {
-    label: "7 ngày qua",
-    getDates: () => ({ from: daysAgoStr(6), to: todayStr() }),
-  },
-  {
-    label: "30 ngày qua",
-    getDates: () => ({ from: daysAgoStr(29), to: todayStr() }),
-  },
+  { label: "Hôm nay",     getDates: () => ({ from: todayStr(),       to: todayStr() }) },
+  { label: "7 ngày qua",  getDates: () => ({ from: daysAgoStr(6),    to: todayStr() }) },
+  { label: "30 ngày qua", getDates: () => ({ from: daysAgoStr(29),   to: todayStr() }) },
 ];
 
 export function DateFilter({ value, onChange }: DateFilterProps) {
   const hasFilter = value.from || value.to;
 
-  function clearFilter() {
-    onChange({ from: "", to: "" });
-  }
-
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <div className="flex items-center gap-1.5 text-desert-text/50">
+      <div className="flex items-center gap-1.5 text-lagoon">
         <CalendarDays size={14} />
-        <span className="text-xs font-medium hidden sm:inline">Thời gian:</span>
+        <span className="text-xs font-medium hidden sm:inline text-night/60">Thời gian:</span>
       </div>
 
       {/* Quick presets */}
@@ -63,8 +50,8 @@ export function DateFilter({ value, onChange }: DateFilterProps) {
             className={clsx(
               "rounded-md border px-2.5 py-1 text-xs font-medium transition-all duration-150",
               isActive
-                ? "border-desert-gold bg-desert-gold/20 text-desert-gold"
-                : "border-sage bg-desert-surface text-desert-text/60 hover:border-desert-gold/50 hover:text-desert-text"
+                ? "bg-lagoon text-white border-lagoon shadow-sm shadow-lagoon/20"
+                : "bg-white text-night border-lagoon hover:bg-desert-surface"
             )}
           >
             {label}
@@ -79,16 +66,16 @@ export function DateFilter({ value, onChange }: DateFilterProps) {
           value={value.from}
           max={value.to || undefined}
           onChange={(e) => onChange({ ...value, from: e.target.value })}
-          className="rounded-md border border-sage bg-desert-surface px-2 py-1 text-xs text-desert-text/80 outline-none transition focus:border-desert-gold focus:ring-1 focus:ring-desert-gold"
+          className="rounded-md border border-lagoon bg-white px-2 py-1 text-xs text-night outline-none transition focus:ring-2 focus:ring-lagoon/30"
           title="Từ ngày"
         />
-        <span className="text-desert-text/30 text-xs">→</span>
+        <span className="text-lagoon/50 text-xs font-bold">→</span>
         <input
           type="date"
           value={value.to}
           min={value.from || undefined}
           onChange={(e) => onChange({ ...value, to: e.target.value })}
-          className="rounded-md border border-sage bg-desert-surface px-2 py-1 text-xs text-desert-text/80 outline-none transition focus:border-desert-gold focus:ring-1 focus:ring-desert-gold"
+          className="rounded-md border border-lagoon bg-white px-2 py-1 text-xs text-night outline-none transition focus:ring-2 focus:ring-lagoon/30"
           title="Đến ngày"
         />
       </div>
@@ -96,9 +83,9 @@ export function DateFilter({ value, onChange }: DateFilterProps) {
       {/* Clear */}
       {hasFilter && (
         <button
-          onClick={clearFilter}
+          onClick={() => onChange({ from: "", to: "" })}
           title="Xóa filter ngày"
-          className="flex items-center gap-1 rounded-md border border-sage/50 bg-desert-surface px-2 py-1 text-xs text-desert-text/50 transition hover:border-terracotta/50 hover:text-terracotta"
+          className="flex items-center gap-1 rounded-md border border-lagoon/40 bg-white px-2 py-1 text-xs text-night/50 transition hover:border-terracotta/60 hover:text-terracotta"
         >
           <X size={12} />
           <span className="hidden sm:inline">Xóa</span>

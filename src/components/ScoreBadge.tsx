@@ -8,24 +8,21 @@ interface ScoreBadgeProps {
 const config: Record<Score, { label: string; classes: string; dot: string }> = {
   Hot: {
     label: "Hot",
-    // Desert Glow — #F2B609
-    classes:
-      "bg-desert-gold/20 text-desert-gold border border-desert-gold/50 ring-1 ring-desert-gold/20",
-    dot: "bg-desert-gold",
+    // Lagoon Bloom solid — #26C0BD bg, Cactus Night text
+    classes: "bg-lagoon text-night border border-lagoon/30",
+    dot: "bg-night/60",
   },
   Warm: {
     label: "Warm",
-    // Cactus Vein — #40BA85
-    classes:
-      "bg-cactus/20 text-cactus border border-cactus/50 ring-1 ring-cactus/20",
-    dot: "bg-cactus",
+    // Desert Glow solid — #F2B609 bg, Cactus Night text
+    classes: "bg-desert-gold text-night border border-desert-gold/50",
+    dot: "bg-night/60",
   },
   Cold: {
     label: "Cold",
-    // Cactus Night bg — #052D24 with Cactus Vein border — #40BA85
-    classes:
-      "bg-night text-cactus border border-cactus ring-1 ring-cactus/30",
-    dot: "bg-cactus",
+    // Cactus pale bg — #E8F5F5 bg, Cactus Night text, Lagoon Bloom border
+    classes: "bg-cactus-pale text-night border border-lagoon",
+    dot: "bg-lagoon",
   },
 };
 

@@ -3,16 +3,16 @@
 @tailwind utilities;
 
 :root {
-  --brand: #F2B609;
+  --brand: #26C0BD;
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
-  background-color: #052D24;
-  color: #26C0BD;
+  background-color: #FFFFFF;
+  color: #052D24;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -23,24 +23,25 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #052D24;
+  background: #F0FAFA;
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 9999px;
-  background: #0F4D3E;
+  background: #26C0BD;
+  opacity: 0.4;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #40BA85;
+  background: #1E9A97;
 }
 
 /* Focus ring */
 *:focus-visible {
-  @apply outline-none ring-2 ring-desert-gold ring-offset-2 ring-offset-desert-bg;
+  @apply outline-none ring-2 ring-lagoon ring-offset-2 ring-offset-white;
 }
 
-/* Date input calendar icon — tinted to match Desert Glow */
+/* Date input calendar icon — tinted to Lagoon Bloom */
 input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(1) sepia(1) saturate(3) hue-rotate(350deg) brightness(1.1);
+  filter: invert(0.6) sepia(1) saturate(4) hue-rotate(155deg);
   cursor: pointer;
   opacity: 0.7;
 }

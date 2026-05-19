@@ -42,44 +42,42 @@ export function MessageTable() {
           onClick={refetch}
           disabled={loading}
           title="Refresh now"
-          className={clsx(
-            "flex items-center gap-2 rounded-lg border border-sage bg-desert-surface px-3 py-2 text-sm text-desert-text/70 transition hover:bg-desert-surface-2 hover:text-desert-text disabled:opacity-50",
-          )}
+          className="flex items-center gap-2 rounded-lg border border-lagoon bg-white px-3 py-2 text-sm text-night transition hover:bg-desert-surface disabled:opacity-50"
         >
-          <RefreshCw size={14} className={clsx(loading && "animate-spin")} />
+          <RefreshCw size={14} className={clsx("text-lagoon", loading && "animate-spin")} />
           <span className="hidden sm:inline">Refresh</span>
         </button>
       </div>
 
       {/* Toolbar row 2: date filter */}
-      <div className="flex flex-wrap items-center gap-2 rounded-lg border border-sage/50 bg-desert-surface/50 px-3 py-2">
+      <div className="flex flex-wrap items-center gap-2 rounded-lg border border-lagoon/30 bg-desert-surface px-3 py-2">
         <DateFilter value={dateRange} onChange={setDateRange} />
       </div>
 
       {/* Status bar */}
-      <div className="flex items-center gap-4 text-xs text-desert-text/40">
+      <div className="flex items-center gap-4 text-xs text-night/40">
         <span className="flex items-center gap-1.5">
-          <Clock size={12} />
+          <Clock size={12} className="text-lagoon/60" />
           Last updated: {lastRefreshed.toLocaleTimeString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" })}
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-cactus animate-pulse-dot" />
+          <span className="inline-block h-1.5 w-1.5 rounded-full bg-lagoon animate-pulse-dot" />
           Auto-refresh in {countdown}s
         </span>
         {!loading && !error && (
           <span className="flex items-center gap-1.5">
-            <MessageSquare size={12} />
+            <MessageSquare size={12} className="text-lagoon/60" />
             {messages.length} message{messages.length !== 1 ? "s" : ""}
           </span>
         )}
       </div>
 
       {/* Table container */}
-      <div className="overflow-hidden rounded-xl border border-sage/60 bg-desert-surface shadow-xl shadow-black/40">
+      <div className="overflow-hidden rounded-xl border border-lagoon/30 bg-white shadow-sm shadow-lagoon/10">
         {error ? (
           <div className="flex flex-col items-center gap-3 py-16 text-center">
             <AlertCircle size={32} className="text-terracotta" />
-            <p className="text-sm text-desert-text/60">Failed to load messages</p>
+            <p className="text-sm text-night/60">Failed to load messages</p>
             <p className="text-xs text-terracotta/80">{error}</p>
           </div>
         ) : loading && messages.length === 0 ? (
@@ -90,17 +88,17 @@ export function MessageTable() {
           <div className="overflow-x-auto">
             <table className="w-full min-w-[640px] border-collapse text-sm">
               <thead>
-                <tr className="border-b border-sage/60 bg-desert-surface-2">
-                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-desert-text/40">
+                <tr className="border-b border-lagoon/20 bg-desert-surface">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-lagoon/70">
                     Thời gian
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-desert-text/40">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-lagoon/70">
                     Người gửi
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-desert-text/40">
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-lagoon/70">
                     Nội dung
                   </th>
-                  <th className="px-4 py-3 text-center text-xs font-semibold uppercase tracking-widest text-desert-text/40">
+                  <th className="px-4 py-3 text-center text-xs font-semibold uppercase tracking-widest text-lagoon/70">
                     Score
                   </th>
                 </tr>
@@ -110,20 +108,20 @@ export function MessageTable() {
                   <tr
                     key={msg.id}
                     className={clsx(
-                      "border-b border-sage/20 transition-colors duration-100 hover:bg-sage/10",
-                      idx % 2 === 0 ? "bg-transparent" : "bg-desert-surface-2/50"
+                      "border-b border-lagoon/10 transition-colors duration-100 hover:bg-desert-surface-2",
+                      idx % 2 === 0 ? "bg-white" : "bg-desert-surface/60"
                     )}
                   >
                     <td className="whitespace-nowrap px-4 py-3">
-                      <div className="text-desert-text/80 font-mono text-xs">{formatDate(msg.received_at ?? '')}</div>
+                      <div className="font-mono text-xs text-night/60">{formatDate(msg.received_at ?? '')}</div>
                     </td>
                     <td className="whitespace-nowrap px-4 py-3">
-                      <span className="rounded-md bg-white/10 px-2 py-0.5 font-mono text-xs text-white/80 border border-white/10">
+                      <span className="rounded-md border border-lagoon/30 bg-lagoon/10 px-2 py-0.5 font-mono text-xs text-lagoon">
                         {msg.sender_name ?? msg.sender_id}
                       </span>
                     </td>
                     <td className="max-w-[400px] px-4 py-3">
-                      <p className="line-clamp-2 text-desert-text/80">{msg.text}</p>
+                      <p className="line-clamp-2 text-night/80">{msg.text}</p>
                     </td>
                     <td className="px-4 py-3 text-center">
                       <ScoreBadge score={msg.score} />
@@ -141,13 +139,13 @@ export function MessageTable() {
 
 function SkeletonRows() {
   return (
-    <div className="divide-y divide-sage/20">
+    <div className="divide-y divide-lagoon/10">
       {Array.from({ length: 6 }).map((_, i) => (
         <div key={i} className="flex items-center gap-4 px-4 py-3 animate-pulse">
-          <div className="h-8 w-28 rounded-md bg-sage/30" />
-          <div className="h-5 w-24 rounded-md bg-sage/30" />
-          <div className="h-5 flex-1 rounded-md bg-sage/30" />
-          <div className="h-6 w-14 rounded-full bg-sage/30" />
+          <div className="h-8 w-28 rounded-md bg-lagoon/10" />
+          <div className="h-5 w-24 rounded-md bg-lagoon/10" />
+          <div className="h-5 flex-1 rounded-md bg-lagoon/10" />
+          <div className="h-6 w-14 rounded-full bg-lagoon/10" />
         </div>
       ))}
     </div>
@@ -166,8 +164,8 @@ function EmptyState({
   const hasDateFilter = dateRange.from || dateRange.to;
   return (
     <div className="flex flex-col items-center gap-3 py-16 text-center">
-      <Inbox size={36} className="text-sage-light" />
-      <p className="text-sm text-desert-text/50">
+      <Inbox size={36} className="text-lagoon/30" />
+      <p className="text-sm text-night/40">
         {search
           ? `No messages matching "${search}"`
           : hasDateFilter

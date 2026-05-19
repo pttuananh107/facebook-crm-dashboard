@@ -11,42 +11,36 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          DEFAULT: "#F2B609",
-          dark: "#C99500",
+          DEFAULT: "#26C0BD",
+          dark: "#1E9A97",
         },
-        // Cactus Night — main bg / darkest surface
         desert: {
-          bg: "#052D24",
-          text: "#26C0BD",       // Lagoon Bloom
-          border: "#0F4D3E",
-          gold: "#F2B609",       // Desert Glow
+          bg: "#FFFFFF",          // white main background
+          text: "#052D24",        // Cactus Night — dark text on light bg
+          border: "#26C0BD",      // Lagoon Bloom border
+          gold: "#F2B609",        // Desert Glow — Warm badge
           "gold-dim": "#C99500",
-          surface: "#0A3D32",    // slightly lighter than bg
-          "surface-2": "#0F4D3E",
+          surface: "#F0FAFA",     // very light teal surface
+          "surface-2": "#E8F9F9", // hover row background
         },
-        // Cactus Vein green
         cactus: {
-          DEFAULT: "#40BA85",
-          dim: "#2E8A60",
-          light: "#5DCCA0",
+          DEFAULT: "#26C0BD",     // Lagoon Bloom = primary accent
+          dim: "#1E9A97",
+          light: "#4CD4D1",
+          pale: "#E8F5F5",        // Cold badge background
         },
-        // Kept for error states only
         terracotta: {
-          DEFAULT: "#C4511A",
+          DEFAULT: "#C4511A",     // errors only
           dim: "#9E4115",
           light: "#D96830",
         },
-        // Border / divider dark teal-green
         sage: {
-          DEFAULT: "#0F4D3E",
-          light: "#1A5E4C",
+          DEFAULT: "#26C0BD",     // border colour = Lagoon Bloom
+          light: "#4CD4D1",
         },
-        // Desert Radiance — bright highlight yellow
         radiance: "#FFEF38",
-        // Lagoon Bloom — alias for quick use
-        lagoon: "#26C0BD",
-        // Night — alias for solid dark backgrounds
-        night: "#052D24",
+        lagoon: "#26C0BD",        // Lagoon Bloom alias
+        night: "#052D24",         // Cactus Night — header/sidebar bg
       },
       animation: {
         "fade-in": "fadeIn 0.3s ease-in-out",

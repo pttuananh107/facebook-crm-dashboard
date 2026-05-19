@@ -12,8 +12,7 @@ export interface Message {
   created_at: string;
   sender_id: string;
   sender_name?: string;
-  content: string;
-  text?: string;
+  text: string;
   score: Score;
   received_at?: string;
 }

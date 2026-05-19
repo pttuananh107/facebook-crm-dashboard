@@ -11,45 +11,27 @@ interface FilterBarProps {
   onChange: (value: FilterValue) => void;
 }
 
-const FILTERS: { value: FilterValue; label: string; activeClass: string }[] = [
-  {
-    value: "All",
-    label: "All",
-    // Lagoon Bloom on sage surface
-    activeClass: "bg-sage-light text-lagoon border-cactus",
-  },
-  {
-    value: "Hot",
-    label: "🔥 Hot",
-    // Desert Glow — gold bg, dark text
-    activeClass: "bg-desert-gold text-night border-desert-gold",
-  },
-  {
-    value: "Warm",
-    label: "☀️ Warm",
-    // Cactus Vein — green bg, white text
-    activeClass: "bg-cactus text-white border-cactus",
-  },
-  {
-    value: "Cold",
-    label: "🌵 Cold",
-    // Night bg + Cactus border + Cactus text
-    activeClass: "bg-night text-cactus border-cactus",
-  },
+const FILTERS: { value: FilterValue; label: string }[] = [
+  { value: "All",  label: "All" },
+  { value: "Hot",  label: "🔥 Hot" },
+  { value: "Warm", label: "☀️ Warm" },
+  { value: "Cold", label: "🌵 Cold" },
 ];
 
 export function FilterBar({ active, counts, onChange }: FilterBarProps) {
   return (
     <div className="flex flex-wrap gap-2">
-      {FILTERS.map(({ value, label, activeClass }) => (
+      {FILTERS.map(({ value, label }) => (
         <button
           key={value}
           onClick={() => onChange(value)}
           className={clsx(
             "inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-all duration-150",
             active === value
-              ? activeClass
-              : "border-sage bg-desert-surface text-desert-text/60 hover:bg-desert-surface-2 hover:text-desert-text"
+              // active: Lagoon Bloom bg, white text
+              ? "bg-lagoon text-white border-lagoon shadow-sm shadow-lagoon/30"
+              // inactive: white bg, Night text, Lagoon Bloom border
+              : "bg-white text-night border-lagoon hover:bg-desert-surface"
           )}
         >
           {label}
@@ -57,8 +39,8 @@ export function FilterBar({ active, counts, onChange }: FilterBarProps) {
             className={clsx(
               "rounded-full px-1.5 py-0.5 text-xs font-bold tabular-nums",
               active === value
-                ? "bg-black/20 text-white"
-                : "bg-sage/60 text-desert-text/50"
+                ? "bg-white/20 text-white"
+                : "bg-lagoon/10 text-lagoon"
             )}
           >
             {counts[value] ?? 0}
