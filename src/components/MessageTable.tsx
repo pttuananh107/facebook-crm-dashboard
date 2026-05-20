@@ -13,6 +13,7 @@ import { type Score, type Conversation } from "@/lib/supabase";
 import { useConversations, type AdSource } from "@/hooks/useConversations";
 import { usePages } from "@/hooks/usePages";
 import { useAllLabels } from "@/hooks/useAllLabels";
+import { useSummary } from "@/hooks/useSummary";
 import { ScoreBadge } from "./ScoreBadge";
 import { FilterBar } from "./FilterBar";
 import { SearchBar } from "./SearchBar";
@@ -21,6 +22,7 @@ import { PageDropdown } from "./PageDropdown";
 import { AdSourceFilter } from "./AdSourceFilter";
 import { LabelFilter } from "./LabelFilter";
 import { ConversationPanel } from "./ConversationPanel";
+import { SummaryCards } from "./SummaryCards";
 import clsx from "clsx";
 
 function formatDate(iso: string): string {
@@ -80,6 +82,7 @@ export function MessageTable() {
   const { labels: allLabels } = useAllLabels();
   const { conversations, loading, error, lastRefreshed, countdown, refetch } =
     useConversations(filter, search, dateRange, selectedPageId, adSource, labelFilter);
+  const { stats, loading: statsLoading } = useSummary(dateRange, selectedPageId);
 
   const counts = useMemo(() => {
     const base = { All: 0, Hot: 0, Warm: 0, Cold: 0 } as Record<Score | "All", number>;
@@ -134,6 +137,9 @@ export function MessageTable() {
             </>
           )}
         </div>
+
+        {/* Summary cards */}
+        <SummaryCards stats={stats} loading={statsLoading} />
 
         {/* Status bar */}
         <div className="flex items-center gap-4 text-xs text-night/40">
