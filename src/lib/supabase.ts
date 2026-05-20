@@ -7,15 +7,25 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export type Score = "Hot" | "Warm" | "Cold";
 
-export interface Message {
+export interface ChatMessage {
+  id?: string;
+  from: "customer" | "page";
+  text: string;
+  timestamp?: string;
+}
+
+export interface Conversation {
   id: string | number;
-  created_at: string;
+  conversation_id: string;
+  page_id?: string;
   sender_id: string;
   sender_name?: string;
-  text: string;
+  messages: ChatMessage[];
+  message_count: number;
   score: Score;
-  received_at?: string;
-  page_id?: string;
+  first_message_at?: string;
+  last_message_at?: string;
+  created_at?: string;
 }
 
 export interface Page {
