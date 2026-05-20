@@ -23,6 +23,10 @@ export interface Conversation {
   messages: ChatMessage[];
   message_count: number;
   score: Score;
+  labels?: string[];
+  ad_id?: string;
+  ad_title?: string;
+  referral_source?: string;
   first_message_at?: string;
   last_message_at?: string;
   created_at?: string;

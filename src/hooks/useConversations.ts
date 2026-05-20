@@ -6,11 +6,15 @@ import { type DateRange } from "@/components/DateFilter";
 
 const REFRESH_INTERVAL = 30_000;
 
+export type AdSource = "All" | "Organic" | "ADS";
+
 export function useConversations(
   filter: Score | "All",
   search: string,
   dateRange: DateRange,
-  pageId: string | null
+  pageId: string | null,
+  adSource: AdSource,
+  labelFilter: string | null
 ) {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [loading, setLoading] = useState(true);
@@ -47,6 +51,16 @@ export function useConversations(
       query = query.eq("page_id", pageId);
     }
 
+    if (adSource === "ADS") {
+      query = query.eq("referral_source", "ADS");
+    } else if (adSource === "Organic") {
+      query = query.is("referral_source", null);
+    }
+
+    if (labelFilter) {
+      query = query.contains("labels", [labelFilter]);
+    }
+
     const { data, error: fetchError } = await query;
 
     if (fetchError) {
@@ -58,7 +72,7 @@ export function useConversations(
     setLoading(false);
     setLastRefreshed(new Date());
     setCountdown(REFRESH_INTERVAL / 1000);
-  }, [filter, search, dateRange, pageId]);
+  }, [filter, search, dateRange, pageId, adSource, labelFilter]);
 
   useEffect(() => {
     fetchConversations();

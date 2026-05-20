@@ -10,13 +10,16 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { type Score, type Conversation } from "@/lib/supabase";
-import { useConversations } from "@/hooks/useConversations";
+import { useConversations, type AdSource } from "@/hooks/useConversations";
 import { usePages } from "@/hooks/usePages";
+import { useAllLabels } from "@/hooks/useAllLabels";
 import { ScoreBadge } from "./ScoreBadge";
 import { FilterBar } from "./FilterBar";
 import { SearchBar } from "./SearchBar";
 import { DateFilter, type DateRange } from "./DateFilter";
 import { PageDropdown } from "./PageDropdown";
+import { AdSourceFilter } from "./AdSourceFilter";
+import { LabelFilter } from "./LabelFilter";
 import { ConversationPanel } from "./ConversationPanel";
 import clsx from "clsx";
 
@@ -30,16 +33,53 @@ function lastMessage(conv: Conversation): string {
   return msgs[msgs.length - 1].text ?? "—";
 }
 
+/** Show up to maxVisible labels then "+N more" */
+function LabelBadges({ labels, maxVisible = 2 }: { labels?: string[]; maxVisible?: number }) {
+  if (!labels || labels.length === 0) return null;
+  const visible = labels.slice(0, maxVisible);
+  const rest = labels.length - maxVisible;
+  return (
+    <div className="mt-1 flex flex-wrap gap-1">
+      {visible.map((l) => (
+        <span
+          key={l}
+          className="rounded-md border border-lagoon/40 bg-lagoon/10 px-1.5 py-0.5 text-[10px] font-medium text-lagoon"
+        >
+          {l}
+        </span>
+      ))}
+      {rest > 0 && (
+        <span className="rounded-md border border-lagoon/20 bg-white px-1.5 py-0.5 text-[10px] text-night/40">
+          +{rest}
+        </span>
+      )}
+    </div>
+  );
+}
+
+/** Gold badge for ad_title */
+function AdBadge({ title }: { title?: string }) {
+  if (!title) return null;
+  return (
+    <span className="mt-1 inline-flex items-center rounded-md border border-desert-gold/50 bg-desert-gold/10 px-1.5 py-0.5 text-[10px] font-medium text-desert-gold">
+      📣 {title}
+    </span>
+  );
+}
+
 export function MessageTable() {
   const [filter, setFilter] = useState<Score | "All">("All");
   const [search, setSearch] = useState("");
   const [dateRange, setDateRange] = useState<DateRange>({ from: "", to: "" });
   const [selectedPageId, setSelectedPageId] = useState<string | null>(null);
+  const [adSource, setAdSource] = useState<AdSource>("All");
+  const [labelFilter, setLabelFilter] = useState<string | null>(null);
   const [activeConv, setActiveConv] = useState<Conversation | null>(null);
 
   const { pages, loading: pagesLoading } = usePages();
+  const { labels: allLabels } = useAllLabels();
   const { conversations, loading, error, lastRefreshed, countdown, refetch } =
-    useConversations(filter, search, dateRange, selectedPageId);
+    useConversations(filter, search, dateRange, selectedPageId, adSource, labelFilter);
 
   const counts = useMemo(() => {
     const base = { All: 0, Hot: 0, Warm: 0, Cold: 0 } as Record<Score | "All", number>;
@@ -53,7 +93,7 @@ export function MessageTable() {
   return (
     <>
       <div className="flex flex-col gap-4 animate-fade-in">
-        {/* Page selector */}
+        {/* Row 0: Page selector */}
         <div className="flex flex-wrap items-center gap-2 rounded-lg border border-lagoon/30 bg-desert-surface px-3 py-2">
           <PageDropdown
             pages={pages}
@@ -63,7 +103,7 @@ export function MessageTable() {
           />
         </div>
 
-        {/* Toolbar row 1: score filters + search + refresh */}
+        {/* Row 1: Score filters + search + refresh */}
         <div className="flex flex-wrap items-center gap-3">
           <FilterBar active={filter} counts={counts} onChange={setFilter} />
           <div className="flex-1 min-w-0" />
@@ -79,9 +119,20 @@ export function MessageTable() {
           </button>
         </div>
 
-        {/* Toolbar row 2: date filter */}
+        {/* Row 2: Date filter */}
         <div className="flex flex-wrap items-center gap-2 rounded-lg border border-lagoon/30 bg-desert-surface px-3 py-2">
           <DateFilter value={dateRange} onChange={setDateRange} />
+        </div>
+
+        {/* Row 3: Ad source + label filter */}
+        <div className="flex flex-wrap items-center gap-4 rounded-lg border border-lagoon/30 bg-desert-surface px-3 py-2">
+          <AdSourceFilter value={adSource} onChange={setAdSource} />
+          {allLabels.length > 0 && (
+            <>
+              <div className="h-4 w-px bg-lagoon/20 hidden sm:block" />
+              <LabelFilter labels={allLabels} value={labelFilter} onChange={setLabelFilter} />
+            </>
+          )}
         </div>
 
         {/* Status bar */}
@@ -114,10 +165,10 @@ export function MessageTable() {
           ) : loading && conversations.length === 0 ? (
             <SkeletonRows />
           ) : conversations.length === 0 ? (
-            <EmptyState search={search} filter={filter} dateRange={dateRange} />
+            <EmptyState search={search} filter={filter} dateRange={dateRange} adSource={adSource} labelFilter={labelFilter} />
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[700px] border-collapse text-sm">
+              <table className="w-full min-w-[720px] border-collapse text-sm">
                 <thead>
                   <tr className="border-b border-lagoon/20 bg-desert-surface">
                     <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-lagoon/70">
@@ -155,16 +206,18 @@ export function MessageTable() {
                         </div>
                       </td>
 
-                      {/* Người gửi */}
-                      <td className="whitespace-nowrap px-4 py-3">
-                        <span className="rounded-md border border-lagoon/30 bg-lagoon/10 px-2 py-0.5 font-mono text-xs text-lagoon">
+                      {/* Người gửi + labels */}
+                      <td className="px-4 py-3">
+                        <span className="rounded-md border border-lagoon/30 bg-lagoon/10 px-2 py-0.5 font-mono text-xs text-lagoon whitespace-nowrap">
                           {conv.sender_name ?? conv.sender_id}
                         </span>
+                        <LabelBadges labels={conv.labels} />
                       </td>
 
-                      {/* Tin nhắn cuối */}
-                      <td className="max-w-[340px] px-4 py-3">
+                      {/* Tin nhắn cuối + ad badge */}
+                      <td className="max-w-[320px] px-4 py-3">
                         <p className="line-clamp-2 text-night/70">{lastMessage(conv)}</p>
+                        <AdBadge title={conv.ad_title} />
                       </td>
 
                       {/* Số tin */}
@@ -221,10 +274,14 @@ function EmptyState({
   search,
   filter,
   dateRange,
+  adSource,
+  labelFilter,
 }: {
   search: string;
   filter: string;
   dateRange: DateRange;
+  adSource: AdSource;
+  labelFilter: string | null;
 }) {
   const hasDateFilter = dateRange.from || dateRange.to;
   return (
@@ -233,6 +290,10 @@ function EmptyState({
       <p className="text-sm text-night/40">
         {search
           ? `Không tìm thấy hội thoại với "${search}"`
+          : labelFilter
+          ? `Không có hội thoại với label "${labelFilter}"`
+          : adSource !== "All"
+          ? `Không có hội thoại từ nguồn "${adSource === "ADS" ? "quảng cáo" : "organic"}"`
           : hasDateFilter
           ? "Không có hội thoại trong khoảng thời gian này"
           : filter !== "All"
