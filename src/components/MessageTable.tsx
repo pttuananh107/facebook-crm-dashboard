@@ -146,7 +146,7 @@ export function MessageTable() {
           <span className="flex items-center gap-1.5">
             <Clock size={12} className="text-lagoon/60" />
             Last updated:{" "}
-            {lastRefreshed.toLocaleTimeString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" })}
+            {(lastRefreshed ? lastRefreshed.toLocaleTimeString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" }) : "--:--:--")}
           </span>
           <span className="flex items-center gap-1.5">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-lagoon animate-pulse-dot" />
