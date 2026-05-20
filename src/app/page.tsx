@@ -1,4 +1,5 @@
-import { MessageSquare, Zap } from "lucide-react";
+import { MessageSquare, Zap, Settings } from "lucide-react";
+import Link from "next/link";
 import { MessageTable } from "@/components/MessageTable";
 
 export default function Home() {
@@ -21,6 +22,13 @@ export default function Home() {
               <span className="h-1.5 w-1.5 rounded-full bg-lagoon animate-pulse" />
               Live
             </span>
+            <Link
+              href="/admin"
+              className="flex items-center gap-1.5 rounded-lg border border-lagoon/40 bg-lagoon/10 px-3 py-1.5 text-xs font-medium text-lagoon transition hover:bg-lagoon/20"
+            >
+              <Settings size={12} />
+              <span className="hidden sm:inline">Admin</span>
+            </Link>
           </div>
         </div>
       </header>

@@ -4,10 +4,12 @@ import { useState, useMemo } from "react";
 import { RefreshCw, Clock, MessageSquare, AlertCircle, Inbox } from "lucide-react";
 import { type Score } from "@/lib/supabase";
 import { useMessages } from "@/hooks/useMessages";
+import { usePages } from "@/hooks/usePages";
 import { ScoreBadge } from "./ScoreBadge";
 import { FilterBar } from "./FilterBar";
 import { SearchBar } from "./SearchBar";
 import { DateFilter, type DateRange } from "./DateFilter";
+import { PageDropdown } from "./PageDropdown";
 import clsx from "clsx";
 
 function formatDate(iso: string): string {
@@ -18,9 +20,12 @@ export function MessageTable() {
   const [filter, setFilter] = useState<Score | "All">("All");
   const [search, setSearch] = useState("");
   const [dateRange, setDateRange] = useState<DateRange>({ from: "", to: "" });
+  const [selectedPageId, setSelectedPageId] = useState<string | null>(null);
+
+  const { pages, loading: pagesLoading } = usePages();
 
   const { messages, loading, error, lastRefreshed, countdown, refetch } =
-    useMessages(filter, search, dateRange);
+    useMessages(filter, search, dateRange, selectedPageId);
 
   const counts = useMemo(() => {
     const base = { All: 0, Hot: 0, Warm: 0, Cold: 0 } as Record<Score | "All", number>;
@@ -33,6 +38,16 @@ export function MessageTable() {
 
   return (
     <div className="flex flex-col gap-4 animate-fade-in">
+      {/* Page selector */}
+      <div className="flex flex-wrap items-center gap-2 rounded-lg border border-lagoon/30 bg-desert-surface px-3 py-2">
+        <PageDropdown
+          pages={pages}
+          value={selectedPageId}
+          onChange={setSelectedPageId}
+          loading={pagesLoading}
+        />
+      </div>
+
       {/* Toolbar row 1: score filters + search + refresh */}
       <div className="flex flex-wrap items-center gap-3">
         <FilterBar active={filter} counts={counts} onChange={setFilter} />

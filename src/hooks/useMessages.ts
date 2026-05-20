@@ -9,7 +9,8 @@ const REFRESH_INTERVAL = 30_000;
 export function useMessages(
   filter: Score | "All",
   search: string,
-  dateRange: DateRange
+  dateRange: DateRange,
+  pageId: string | null
 ) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
@@ -42,6 +43,10 @@ export function useMessages(
       query = query.lte("received_at", `${dateRange.to}T23:59:59+07:00`);
     }
 
+    if (pageId) {
+      query = query.eq("page_id", pageId);
+    }
+
     const { data, error: fetchError } = await query;
 
     if (fetchError) {
@@ -53,7 +58,7 @@ export function useMessages(
     setLoading(false);
     setLastRefreshed(new Date());
     setCountdown(REFRESH_INTERVAL / 1000);
-  }, [filter, search, dateRange]);
+  }, [filter, search, dateRange, pageId]);
 
   useEffect(() => {
     fetchMessages();

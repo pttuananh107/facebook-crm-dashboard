@@ -1,3 +1,31 @@
+-- Create pages table
+create table if not exists public.pages (
+  page_id      text        primary key,
+  page_name    text        not null,
+  access_token text,
+  is_active    boolean     not null default true,
+  created_at   timestamptz not null default now()
+);
+
+alter table public.pages enable row level security;
+
+create policy "Allow public read pages"
+  on public.pages for select using (true);
+
+create policy "Allow public insert pages"
+  on public.pages for insert with check (true);
+
+create policy "Allow public update pages"
+  on public.pages for update using (true);
+
+create policy "Allow public delete pages"
+  on public.pages for delete using (true);
+
+-- Add page_id column to messages (if not exists)
+alter table public.messages add column if not exists page_id text references public.pages(page_id) on delete set null;
+
+create index if not exists messages_page_id_idx on public.messages (page_id);
+
 -- Create messages table
 create table if not exists public.messages (
   id          bigserial primary key,

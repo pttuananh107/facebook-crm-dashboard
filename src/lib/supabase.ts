@@ -15,4 +15,13 @@ export interface Message {
   text: string;
   score: Score;
   received_at?: string;
+  page_id?: string;
+}
+
+export interface Page {
+  page_id: string;
+  page_name: string;
+  access_token?: string;
+  is_active: boolean;
+  created_at?: string;
 }
