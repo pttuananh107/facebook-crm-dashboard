@@ -5,29 +5,23 @@ import { usePathname, useRouter } from "next/navigation";
 import { Sidebar } from "@/components/Sidebar";
 import { useAuth } from "@/contexts/AuthContext";
 
-const PUBLIC_PATHS = ["/login", "/reset-password", "/register"];
-
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const [expanded, setExpanded] = useState(false);
   const { user, loading } = useAuth();
-  const [redirecting, setRedirecting] = useState(false);
-
-  const isPublic = PUBLIC_PATHS.includes(pathname);
+  const [timedOut, setTimedOut] = useState(false);
 
   useEffect(() => {
-    if (!loading && !user && !isPublic) {
-      setRedirecting(true);
-      router.replace("/login");
-    }
-  }, [loading, user, isPublic, router]);
+    const t = setTimeout(() => setTimedOut(true), 3000);
+    return () => clearTimeout(t);
+  }, []);
 
-  if (isPublic) {
-    return <>{children}</>;
-  }
+  const isPublic = pathname === "/login" || pathname === "/reset-password" || pathname === "/register";
 
-  if (loading || redirecting) {
+  if (isPublic) return <>{children}</>;
+
+  if (loading && !timedOut) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-desert-bg">
         <div className="flex flex-col items-center gap-3">
@@ -36,6 +30,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </div>
     );
+  }
+
+  if (!user) {
+    router.replace("/login");
+    return null;
   }
 
   return (
