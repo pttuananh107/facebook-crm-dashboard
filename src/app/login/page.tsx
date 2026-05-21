@@ -1,22 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-import { Zap, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
+import { Zap, Loader2, AlertCircle, CheckCircle } from "lucide-react";
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const passwordChanged = searchParams.get("success") === "password_changed";
+  const success = searchParams.get("success");
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log("[Login] existing session:", session?.user?.email ?? "none");
       if (session) router.replace("/");
     });
   }, [router]);
@@ -25,14 +24,11 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    console.log("[Login] attempting login for:", email);
-    const { data, error: err } = await supabase.auth.signInWithPassword({ email, password });
-    console.log("[Login] result:", { user: data?.user?.email, error: err?.message });
+    const { error: err } = await supabase.auth.signInWithPassword({ email, password });
     if (err) {
       setError(err.message);
       setLoading(false);
     } else {
-      console.log("[Login] success, redirecting...");
       router.replace("/");
     }
   }
@@ -51,9 +47,9 @@ export default function LoginPage() {
         </div>
         <div className="rounded-xl border border-lagoon/30 bg-white shadow-sm shadow-lagoon/10 p-6">
           <h2 className="mb-5 text-sm font-semibold text-night">Đăng nhập</h2>
-          {passwordChanged && (
-            <div className="flex items-center gap-2 rounded-lg border border-lagoon/30 bg-lagoon/10 px-3 py-2 text-xs text-lagoon mb-4">
-              <CheckCircle2 size={13} />
+          {success === "password_changed" && (
+            <div className="flex items-center gap-2 rounded-lg border border-lagoon/30 bg-lagoon/5 px-3 py-2 text-xs text-lagoon mb-4">
+              <CheckCircle size={13} />
               Đổi mật khẩu thành công, vui lòng đăng nhập lại
             </div>
           )}
@@ -98,5 +94,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
   );
 }
