@@ -1,20 +1,33 @@
 "use client";
 
-import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { Sidebar } from "@/components/Sidebar";
 import { useAuth } from "@/contexts/AuthContext";
 
+const PUBLIC_PATHS = ["/login", "/reset-password", "/register"];
+
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [expanded, setExpanded] = useState(false);
-  const { loading } = useAuth();
+  const { user, loading } = useAuth();
+  const [redirecting, setRedirecting] = useState(false);
 
-  if (pathname === "/login" || pathname === "/reset-password") {
+  const isPublic = PUBLIC_PATHS.includes(pathname);
+
+  useEffect(() => {
+    if (!loading && !user && !isPublic) {
+      setRedirecting(true);
+      router.replace("/login");
+    }
+  }, [loading, user, isPublic, router]);
+
+  if (isPublic) {
     return <>{children}</>;
   }
 
-  if (loading) {
+  if (loading || redirecting) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-desert-bg">
         <div className="flex flex-col items-center gap-3">

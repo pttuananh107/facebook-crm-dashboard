@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import Link from "next/link";
 import { Zap, Loader2, AlertCircle, CheckCircle } from "lucide-react";
 
 function LoginForm() {
@@ -94,6 +95,12 @@ function LoginForm() {
               Đăng nhập
             </button>
           </form>
+          <p className="mt-4 text-center text-xs text-night/50">
+            Chưa có tài khoản?{" "}
+            <Link href="/register" className="font-medium text-lagoon hover:underline">
+              Đăng ký
+            </Link>
+          </p>
         </div>
       </div>
     </div>
