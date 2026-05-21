@@ -50,9 +50,13 @@ function RegisterForm() {
         email,
         full_name: fullName,
         role: "viewer",
+        status: "pending",
         assigned_page_ids: [],
       });
     }
+
+    // Sign out immediately so the pending user isn't auto-logged in
+    await supabase.auth.signOut();
 
     setLoading(false);
     setSuccess(true);
@@ -69,7 +73,8 @@ function RegisterForm() {
             <div>
               <h2 className="text-base font-semibold text-night mb-1">Đăng ký thành công!</h2>
               <p className="text-sm text-night/60">
-                Tài khoản của bạn đã được tạo. Vui lòng chờ admin phê duyệt trước khi đăng nhập.
+                Tài khoản của bạn đang chờ được phê duyệt.
+                Bạn sẽ nhận được thông báo khi được cấp quyền truy cập.
               </p>
             </div>
             <Link
