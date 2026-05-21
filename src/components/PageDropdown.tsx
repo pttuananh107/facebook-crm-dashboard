@@ -39,7 +39,9 @@ export function PageDropdown({ pages, value, onChange, loading }: PageDropdownPr
           className="appearance-none rounded-lg border border-lagoon bg-white pl-3 pr-8 py-1.5 text-sm font-medium text-night outline-none transition focus:ring-2 focus:ring-lagoon/30 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           style={{ minWidth: 180 }}
         >
-          <option value="">Tất cả pages</option>
+          {profile?.role === "super_admin" && (
+            <option value="">Tất cả pages</option>
+          )}
           {visiblePages.map((page) => (
             <option key={page.page_id} value={page.page_id}>
               {page.page_name}

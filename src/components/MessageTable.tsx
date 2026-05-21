@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   RefreshCw,
   Clock,
@@ -10,6 +10,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { type Score, type Conversation } from "@/lib/supabase";
+import { useAuth } from "@/contexts/AuthContext";
 import { useConversations, type AdSource } from "@/hooks/useConversations";
 import { usePages } from "@/hooks/usePages";
 import { useAllLabels } from "@/hooks/useAllLabels";
@@ -70,6 +71,7 @@ function AdBadge({ title }: { title?: string }) {
 }
 
 export function MessageTable() {
+  const { profile } = useAuth();
   const [filter, setFilter] = useState<Score | "All">("All");
   const [search, setSearch] = useState("");
   const [dateRange, setDateRange] = useState<DateRange>({ from: "", to: "" });
@@ -79,6 +81,12 @@ export function MessageTable() {
   const [activeConv, setActiveConv] = useState<Conversation | null>(null);
 
   const { pages, loading: pagesLoading } = usePages();
+
+  useEffect(() => {
+    if (!profile || profile.role === "super_admin") return;
+    const ids = profile.assigned_page_ids ?? [];
+    if (ids.length > 0) setSelectedPageId(ids[0]);
+  }, [profile]);
   const { labels: allLabels } = useAllLabels();
   const { conversations, loading, error, lastRefreshed, countdown, refetch } =
     useConversations(filter, search, dateRange, selectedPageId, adSource, labelFilter);
