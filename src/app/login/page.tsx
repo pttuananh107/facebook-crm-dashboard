@@ -3,8 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-import Link from "next/link";
-import { Zap, Loader2, AlertCircle, CheckCircle, Clock } from "lucide-react";
+import { Zap, Loader2, AlertCircle, CheckCircle } from "lucide-react";
 
 function LoginForm() {
   const router = useRouter();
@@ -13,9 +12,7 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [pendingError, setPendingError] = useState(false);
   const success = searchParams.get("success");
-  const pending = searchParams.get("pending");
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -27,34 +24,34 @@ function LoginForm() {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    setPendingError(false);
 
     const { data, error: err } = await supabase.auth.signInWithPassword({ email, password });
+
     if (err) {
       setError(err.message);
       setLoading(false);
       return;
     }
 
-    const userId = data.user?.id;
-    if (userId) {
-      const { data: profileData } = await supabase
+    // Kiểm tra status pending
+    if (data.user) {
+      const { data: profile } = await supabase
         .from("user_profiles")
         .select("status")
-        .eq("id", userId)
+        .eq("id", data.user.id)
         .maybeSingle();
 
-      if ((profileData as { status?: string } | null)?.status === "pending") {
+      if ((profile as any)?.status === "pending") {
         await supabase.auth.signOut();
-        setPendingError(true);
+        setError("Tài khoản của bạn đang chờ phê duyệt từ admin.");
         setLoading(false);
         return;
       }
     }
 
-    await new Promise((r) => setTimeout(r, 500));
-    router.refresh();
-    router.replace("/");
+    // Đợi session được lưu vào localStorage
+    await new Promise((r) => setTimeout(r, 300));
+    window.location.href = "/";
   }
 
   return (
@@ -71,21 +68,12 @@ function LoginForm() {
         </div>
         <div className="rounded-xl border border-lagoon/30 bg-white shadow-sm shadow-lagoon/10 p-6">
           <h2 className="mb-5 text-sm font-semibold text-night">Đăng nhập</h2>
-
-          {pending === "true" && (
-            <div className="flex items-center gap-2 rounded-lg border border-amber-300/50 bg-amber-50 px-3 py-2 text-xs text-amber-700 mb-4">
-              <Clock size={13} />
-              Tài khoản của bạn đang chờ được phê duyệt từ admin.
-            </div>
-          )}
-
           {success === "password_changed" && (
             <div className="flex items-center gap-2 rounded-lg border border-lagoon/30 bg-lagoon/5 px-3 py-2 text-xs text-lagoon mb-4">
               <CheckCircle size={13} />
               Đổi mật khẩu thành công, vui lòng đăng nhập lại
             </div>
           )}
-
           <form onSubmit={handleLogin} className="flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-medium text-night/60">Email</label>
@@ -109,21 +97,12 @@ function LoginForm() {
                 className="rounded-lg border border-lagoon/50 bg-desert-surface px-3 py-2.5 text-sm text-night outline-none transition focus:ring-2 focus:ring-lagoon/30 placeholder:text-night/30"
               />
             </div>
-
-            {pendingError && (
-              <div className="flex items-center gap-2 rounded-lg border border-amber-300/50 bg-amber-50 px-3 py-2 text-xs text-amber-700">
-                <Clock size={13} />
-                Tài khoản của bạn đang chờ phê duyệt từ admin.
-              </div>
-            )}
-
             {error && (
               <div className="flex items-center gap-2 rounded-lg border border-terracotta/30 bg-terracotta/5 px-3 py-2 text-xs text-terracotta">
                 <AlertCircle size={13} />
                 {error}
               </div>
             )}
-
             <button
               type="submit"
               disabled={loading}
@@ -133,11 +112,11 @@ function LoginForm() {
               Đăng nhập
             </button>
           </form>
-          <p className="mt-4 text-center text-xs text-night/50">
+          <p className="mt-4 text-center text-xs text-night/40">
             Chưa có tài khoản?{" "}
-            <Link href="/register" className="font-medium text-lagoon hover:underline">
+            <a href="/register" className="text-lagoon hover:underline">
               Đăng ký ngay
-            </Link>
+            </a>
           </p>
         </div>
       </div>
