@@ -54,7 +54,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           .maybeSingle();
         
         if (mounted) {
-          setProfile((data as UserProfile) ?? null);
+          setProfile((data as unknown as UserProfile) ?? null);
           setLoading(false);
         }
       }
