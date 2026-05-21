@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Sidebar } from "@/components/Sidebar";
 import { useAuth } from "@/contexts/AuthContext";
@@ -10,18 +10,27 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [expanded, setExpanded] = useState(false);
   const { user, loading } = useAuth();
-  const [timedOut, setTimedOut] = useState(false);
+  const redirecting = useRef(false);
+
+  const isPublic = pathname === "/login" ||
+    pathname === "/reset-password" ||
+    pathname === "/register";
 
   useEffect(() => {
-    const t = setTimeout(() => setTimedOut(true), 3000);
-    return () => clearTimeout(t);
-  }, []);
-
-  const isPublic = pathname === "/login" || pathname === "/reset-password" || pathname === "/register";
+    if (loading) return;
+    if (isPublic) return;
+    if (!user && !redirecting.current) {
+      redirecting.current = true;
+      router.replace("/login");
+    }
+    if (user) {
+      redirecting.current = false;
+    }
+  }, [user, loading, isPublic, router]);
 
   if (isPublic) return <>{children}</>;
 
-  if (loading && !timedOut) {
+  if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-desert-bg">
         <div className="flex flex-col items-center gap-3">
@@ -32,10 +41,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     );
   }
 
-  if (!user) {
-    router.replace("/login");
-    return null;
-  }
+  if (!user) return null;
 
   return (
     <div className="min-h-screen">
