@@ -25,14 +25,14 @@ export function PageDropdown({ pages, value, onChange, loading }: PageDropdownPr
     <div className="flex items-center gap-2">
       <div className="flex items-center gap-1.5 text-lagoon/60 shrink-0">
         <Globe size={13} />
-        <span className="text-xs font-medium text-white/40 hidden sm:inline">Fanpage:</span>
+        <span className="text-xs font-medium text-[#5A7A6A] hidden sm:inline">Fanpage:</span>
       </div>
       <div className="relative">
         <select
           value={value ?? ""}
           onChange={(e) => onChange(e.target.value || null)}
           disabled={loading}
-          className="appearance-none rounded-lg border border-white/10 bg-white/5 pl-3 pr-8 py-1.5 text-xs font-medium text-white/70 outline-none transition focus:border-lagoon/40 focus:ring-1 focus:ring-lagoon/25 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          className="appearance-none rounded-lg border border-[#D0E4D8] bg-white pl-3 pr-8 py-1.5 text-xs font-medium text-[#3A5A4A] outline-none transition focus:border-[#26C0BD] focus:ring-1 focus:ring-[#26C0BD]/25 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           style={{ minWidth: 170 }}
         >
           {profile?.role === "super_admin" && (
@@ -46,7 +46,7 @@ export function PageDropdown({ pages, value, onChange, loading }: PageDropdownPr
         </select>
         <ChevronDown
           size={13}
-          className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-white/30"
+          className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-[#5A7A6A]"
         />
       </div>
     </div>

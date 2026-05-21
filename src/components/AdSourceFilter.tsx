@@ -19,13 +19,13 @@ export function AdSourceFilter({ value, onChange }: AdSourceFilterProps) {
     <div className="flex items-center gap-2">
       <div className="flex items-center gap-1.5 shrink-0">
         <Radio size={13} className="text-lagoon/60" />
-        <span className="text-xs font-medium text-white/40 hidden sm:inline">Nguồn:</span>
+        <span className="text-xs font-medium text-[#5A7A6A] hidden sm:inline">Nguồn:</span>
       </div>
       <div className="relative">
         <select
           value={value}
           onChange={(e) => onChange(e.target.value as AdSource)}
-          className="appearance-none rounded-lg border border-white/10 bg-white/5 pl-3 pr-8 py-1.5 text-xs font-medium text-white/70 outline-none transition focus:border-lagoon/40 focus:ring-1 focus:ring-lagoon/25 cursor-pointer"
+          className="appearance-none rounded-lg border border-[#D0E4D8] bg-white pl-3 pr-8 py-1.5 text-xs font-medium text-[#3A5A4A] outline-none transition focus:border-[#26C0BD] focus:ring-1 focus:ring-[#26C0BD]/25 cursor-pointer"
           style={{ minWidth: 140 }}
         >
           {OPTIONS.map((o) => (
@@ -36,7 +36,7 @@ export function AdSourceFilter({ value, onChange }: AdSourceFilterProps) {
         </select>
         <ChevronDown
           size={13}
-          className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-white/30"
+          className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-[#5A7A6A]"
         />
       </div>
     </div>

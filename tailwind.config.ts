@@ -15,13 +15,13 @@ const config: Config = {
           dark: "#1E9A97",
         },
         desert: {
-          bg: "#FFFFFF",          // white main background
+          bg: "#F5F7F5",          // page background
           text: "#052D24",        // Cactus Night — dark text on light bg
           border: "#26C0BD",      // Lagoon Bloom border
           gold: "#F2B609",        // Desert Glow — Warm badge
           "gold-dim": "#C99500",
-          surface: "#F0FAFA",     // very light teal surface
-          "surface-2": "#E8F9F9", // hover row background
+          surface: "#F0F4F1",     // sidebar / surface bg
+          "surface-2": "#E6F7F0", // active / hover bg
         },
         cactus: {
           DEFAULT: "#26C0BD",     // Lagoon Bloom = primary accent

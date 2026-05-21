@@ -99,7 +99,7 @@ function SourceBadge({ source, adTitle }: { source?: string; adTitle?: string })
       </span>
     );
   }
-  return <span className="text-xs text-white/25">Organic</span>;
+  return <span className="text-xs text-[#5A7A6A]/70">Organic</span>;
 }
 
 function LabelBadges({ labels, maxVisible = 2 }: { labels?: string[]; maxVisible?: number }) {
@@ -117,7 +117,7 @@ function LabelBadges({ labels, maxVisible = 2 }: { labels?: string[]; maxVisible
         </span>
       ))}
       {rest > 0 && (
-        <span className="rounded border border-white/10 bg-white/5 px-1.5 py-0.5 text-[10px] text-white/30">
+        <span className="rounded border border-[#E0EBE4] bg-[#F0F4F1] px-1.5 py-0.5 text-[10px] text-[#5A7A6A]">
           +{rest}
         </span>
       )}
@@ -133,7 +133,7 @@ const SORT_OPTIONS: { value: SortOption; label: string }[] = [
 ];
 
 const TOOLBAR_BTN =
-  "inline-flex items-center gap-1.5 rounded-md border border-white/12 bg-white/4 px-2.5 py-1.5 text-xs font-medium text-white/60 transition-all duration-150 hover:border-lagoon/35 hover:bg-lagoon/8 hover:text-white/90 select-none";
+  "inline-flex items-center gap-1.5 rounded-md border border-[#D0E4D8] bg-white px-2.5 py-1.5 text-xs font-medium text-[#052D24] transition-all duration-150 hover:border-[#26C0BD] hover:bg-[#F0FAF5] hover:text-[#052D24] select-none";
 
 function exportCSV(convs: Conversation[], filename: string) {
   const headers = ["Thời gian", "Khách hàng", "Score", "Nguồn", "Số tin nhắn"];
@@ -341,10 +341,10 @@ export function MessageTable() {
               >
                 <ArrowUpDown size={13} />
                 {currentSortLabel}
-                <ChevronDown size={11} className="text-white/30" />
+                <ChevronDown size={11} className="text-[#5A7A6A]" />
               </button>
               {showSortMenu && (
-                <div className="absolute left-0 top-full z-40 mt-1.5 w-48 overflow-hidden rounded-xl border border-white/10 bg-[#062e25] shadow-2xl shadow-black/40 animate-fade-in">
+                <div className="absolute left-0 top-full z-40 mt-1.5 w-48 overflow-hidden rounded-xl border border-[#E0EBE4] bg-white shadow-xl shadow-[#0A1F16]/10 animate-fade-in">
                   {SORT_OPTIONS.map((opt) => (
                     <button
                       key={opt.value}
@@ -356,7 +356,7 @@ export function MessageTable() {
                         "flex w-full items-center justify-between px-3 py-2.5 text-left text-xs transition-colors",
                         sortOption === opt.value
                           ? "bg-lagoon/15 text-lagoon"
-                          : "text-white/60 hover:bg-white/5 hover:text-white/90"
+                          : "text-[#5A7A6A] hover:bg-[#F0FAF5] hover:text-[#0A1F16]"
                       )}
                     >
                       {opt.label}
@@ -367,7 +367,7 @@ export function MessageTable() {
               )}
             </div>
 
-            <div className="h-4 w-px bg-white/10" />
+            <div className="h-4 w-px bg-[#E0EBE4]" />
 
             {/* Show Statistics toggle */}
             <button
@@ -408,7 +408,7 @@ export function MessageTable() {
 
         {/* === FILTERS SECTION === */}
         {showFilters && (
-          <div className="space-y-3 rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 animate-fade-in">
+          <div className="space-y-3 rounded-xl border border-[#E0EBE4] bg-white p-4 animate-fade-in">
             <div className="flex flex-wrap items-center gap-2">
               <PageDropdown
                 pages={pages}
@@ -429,7 +429,7 @@ export function MessageTable() {
               <AdSourceFilter value={adSource} onChange={setAdSource} />
               {allLabels.length > 0 && (
                 <>
-                  <div className="h-4 w-px bg-white/10 hidden sm:block" />
+                  <div className="h-4 w-px bg-[#E0EBE4] hidden sm:block" />
                   <LabelFilter
                     labels={allLabels}
                     value={labelFilter}
@@ -445,9 +445,9 @@ export function MessageTable() {
         {showStats && <SummaryCards stats={stats} loading={statsLoading} />}
 
         {/* === STATUS BAR === */}
-        <div className="flex items-center gap-4 text-xs text-white/30">
+        <div className="flex items-center gap-4 text-xs text-[#5A7A6A]">
           <span className="flex items-center gap-1.5">
-            <Clock size={11} className="text-lagoon/40" />
+            <Clock size={11} className="text-lagoon/70" />
             {lastRefreshed
               ? lastRefreshed.toLocaleTimeString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" })
               : "--:--:--"}
@@ -464,11 +464,11 @@ export function MessageTable() {
         </div>
 
         {/* === TABLE === */}
-        <div className="overflow-hidden rounded-xl border border-white/[0.08]">
+        <div className="overflow-hidden rounded-xl border border-[#E0EBE4]">
           {error ? (
             <div className="flex flex-col items-center gap-3 py-16 text-center">
               <AlertCircle size={32} className="text-terracotta" />
-              <p className="text-sm text-white/50">Không thể tải dữ liệu</p>
+              <p className="text-sm text-[#5A7A6A]">Không thể tải dữ liệu</p>
               <p className="text-xs text-terracotta/70">{error}</p>
             </div>
           ) : loading && conversations.length === 0 ? (
@@ -485,32 +485,32 @@ export function MessageTable() {
             <div className="overflow-x-auto">
               <table className="w-full min-w-[760px] border-collapse text-sm">
                 <thead>
-                  <tr className="border-b border-white/[0.08] bg-night">
+                  <tr className="border-b border-[#E0EBE4] bg-[#F0F4F1]">
                     {/* Checkbox */}
                     <th className="w-10 px-4 py-3">
                       <input
                         type="checkbox"
                         checked={allPageSelected}
                         onChange={toggleAllPage}
-                        className="h-3.5 w-3.5 rounded border-white/20 bg-white/5 accent-lagoon cursor-pointer"
+                        className="h-3.5 w-3.5 rounded border-[#D0E4D8] bg-white accent-lagoon cursor-pointer"
                       />
                     </th>
-                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-widest text-white/30">
+                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-widest text-[#052D24]">
                       Khách hàng
                     </th>
-                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-widest text-white/30">
+                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-widest text-[#052D24]">
                       Tin nhắn
                     </th>
-                    <th className="px-4 py-3 text-center text-[10px] font-semibold uppercase tracking-widest text-white/30">
+                    <th className="px-4 py-3 text-center text-[10px] font-semibold uppercase tracking-widest text-[#052D24]">
                       Score
                     </th>
-                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-widest text-white/30">
+                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-widest text-[#052D24]">
                       Nguồn
                     </th>
-                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-widest text-white/30">
+                    <th className="px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-widest text-[#052D24]">
                       Thời gian
                     </th>
-                    <th className="w-12 px-3 py-3 text-center text-[10px] font-semibold uppercase tracking-widest text-white/30">
+                    <th className="w-12 px-3 py-3 text-center text-[10px] font-semibold uppercase tracking-widest text-[#052D24]">
                       Chi tiết
                     </th>
                   </tr>
@@ -523,10 +523,10 @@ export function MessageTable() {
                       <tr
                         key={conv.id}
                         className={clsx(
-                          "relative border-b border-white/[0.05] transition-colors duration-100",
+                          "relative border-b border-[#F0F4F1] transition-colors duration-100",
                           isSelected
-                            ? "bg-lagoon/[0.08]"
-                            : "hover:bg-white/[0.04]"
+                            ? "bg-[#E6F7F0]"
+                            : "hover:bg-[#F5FBF7]"
                         )}
                       >
                         {/* Selected left border */}
@@ -544,7 +544,7 @@ export function MessageTable() {
                             type="checkbox"
                             checked={isSelected}
                             onChange={() => toggleRow(rowId)}
-                            className="h-3.5 w-3.5 rounded border-white/20 bg-white/5 accent-lagoon cursor-pointer"
+                            className="h-3.5 w-3.5 rounded border-[#D0E4D8] bg-white accent-lagoon cursor-pointer"
                           />
                         </td>
 
@@ -556,11 +556,11 @@ export function MessageTable() {
                           <div className="flex items-center gap-2.5">
                             <Avatar name={conv.sender_name ?? conv.sender_id} />
                             <div className="min-w-0">
-                              <p className="truncate text-sm font-medium text-white/85">
+                              <p className="truncate text-sm font-medium text-[#0A1F16]">
                                 {conv.sender_name ?? conv.sender_id}
                               </p>
                               {conv.sender_name && (
-                                <p className="truncate text-[10px] font-mono text-white/30">
+                                <p className="truncate text-[10px] font-mono text-[#5A7A6A]">
                                   {conv.sender_id}
                                 </p>
                               )}
@@ -574,7 +574,7 @@ export function MessageTable() {
                           className="max-w-[280px] cursor-pointer px-4 py-3"
                           onClick={() => setActiveConv(conv)}
                         >
-                          <p className="line-clamp-2 text-xs text-white/55 leading-relaxed">
+                          <p className="line-clamp-2 text-xs text-[#5A7A6A] leading-relaxed">
                             {firstMessage(conv)}
                           </p>
                         </td>
@@ -592,7 +592,7 @@ export function MessageTable() {
                         {/* Thời gian */}
                         <td className="cursor-pointer whitespace-nowrap px-4 py-3" onClick={() => setActiveConv(conv)}>
                           <span
-                            className="text-xs text-white/40"
+                            className="text-xs text-[#5A7A6A]"
                             title={formatDate(conv.last_message_at ?? conv.created_at ?? "")}
                           >
                             {formatDateShort(conv.last_message_at ?? conv.created_at ?? "")}
@@ -604,7 +604,7 @@ export function MessageTable() {
                           <button
                             onClick={() => setActiveConv(conv)}
                             title="Xem chi tiết"
-                            className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-white/10 bg-white/5 text-white/35 transition hover:border-lagoon/40 hover:bg-lagoon/10 hover:text-lagoon"
+                            className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-[#E0EBE4] bg-[#F0F4F1] text-[#5A7A6A] transition hover:border-lagoon/40 hover:bg-lagoon/10 hover:text-lagoon"
                           >
                             <Eye size={13} />
                           </button>
@@ -623,14 +623,14 @@ export function MessageTable() {
           <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
             {/* Per page + info */}
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 text-xs text-white/40">
+              <div className="flex items-center gap-2 text-xs text-[#5A7A6A]">
                 <span>Hiển thị</span>
                 <select
                   value={pageSize}
                   onChange={(e) => {
                     setPageSize(Number(e.target.value) as PageSize);
                   }}
-                  className="rounded-md border border-white/10 bg-white/5 px-2 py-1 text-xs text-white/60 outline-none transition focus:border-lagoon/40 cursor-pointer"
+                  className="rounded-md border border-[#D0E4D8] bg-white px-2 py-1 text-xs text-[#3A5A4A] outline-none transition focus:border-[#26C0BD] cursor-pointer"
                 >
                   <option value={10}>10</option>
                   <option value={25}>25</option>
@@ -639,7 +639,7 @@ export function MessageTable() {
                 <span>mỗi trang</span>
               </div>
               {sortedConvs.length > 0 && (
-                <span className="text-xs text-white/25">
+                <span className="text-xs text-[#5A7A6A]/70">
                   {startRow}–{endRow} / {sortedConvs.length}
                 </span>
               )}
@@ -650,21 +650,21 @@ export function MessageTable() {
               <button
                 onClick={() => setCurrentPage(1)}
                 disabled={currentPage === 1}
-                className="flex h-7 w-7 items-center justify-center rounded-md border border-white/10 bg-white/4 text-white/40 transition hover:border-lagoon/35 hover:bg-lagoon/8 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
+                className="flex h-7 w-7 items-center justify-center rounded-md border border-[#D0E4D8] bg-white text-[#5A7A6A] transition hover:border-[#26C0BD] hover:bg-[#F0FAF5] hover:text-[#052D24] disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 <ChevronsLeft size={13} />
               </button>
               <button
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
-                className="flex h-7 w-7 items-center justify-center rounded-md border border-white/10 bg-white/4 text-white/40 transition hover:border-lagoon/35 hover:bg-lagoon/8 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
+                className="flex h-7 w-7 items-center justify-center rounded-md border border-[#D0E4D8] bg-white text-[#5A7A6A] transition hover:border-[#26C0BD] hover:bg-[#F0FAF5] hover:text-[#052D24] disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 <ChevronLeft size={13} />
               </button>
 
               {pageNumbers.map((p, i) =>
                 p === "..." ? (
-                  <span key={`ellipsis-${i}`} className="px-1 text-xs text-white/25">
+                  <span key={`ellipsis-${i}`} className="px-1 text-xs text-[#5A7A6A]/60">
                     …
                   </span>
                 ) : (
@@ -675,7 +675,7 @@ export function MessageTable() {
                       "flex h-7 min-w-[28px] items-center justify-center rounded-md border px-1.5 text-xs font-medium transition",
                       currentPage === p
                         ? "border-lagoon/50 bg-lagoon/20 text-lagoon"
-                        : "border-white/10 bg-white/4 text-white/45 hover:border-lagoon/35 hover:bg-lagoon/8 hover:text-white"
+                        : "border-[#D0E4D8] bg-white text-[#5A7A6A] hover:border-[#26C0BD] hover:bg-[#F0FAF5] hover:text-[#052D24]"
                     )}
                   >
                     {p}
@@ -686,21 +686,21 @@ export function MessageTable() {
               <button
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
-                className="flex h-7 w-7 items-center justify-center rounded-md border border-white/10 bg-white/4 text-white/40 transition hover:border-lagoon/35 hover:bg-lagoon/8 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
+                className="flex h-7 w-7 items-center justify-center rounded-md border border-[#D0E4D8] bg-white text-[#5A7A6A] transition hover:border-[#26C0BD] hover:bg-[#F0FAF5] hover:text-[#052D24] disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 <ChevronRight size={13} />
               </button>
               <button
                 onClick={() => setCurrentPage(totalPages)}
                 disabled={currentPage === totalPages}
-                className="flex h-7 w-7 items-center justify-center rounded-md border border-white/10 bg-white/4 text-white/40 transition hover:border-lagoon/35 hover:bg-lagoon/8 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
+                className="flex h-7 w-7 items-center justify-center rounded-md border border-[#D0E4D8] bg-white text-[#5A7A6A] transition hover:border-[#26C0BD] hover:bg-[#F0FAF5] hover:text-[#052D24] disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 <ChevronsRight size={13} />
               </button>
             </div>
 
             {/* Go to page */}
-            <div className="flex items-center gap-2 text-xs text-white/35">
+            <div className="flex items-center gap-2 text-xs text-[#5A7A6A]">
               <span>Trang</span>
               <input
                 type="number"
@@ -709,12 +709,12 @@ export function MessageTable() {
                 value={goToPage}
                 onChange={(e) => setGoToPage(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleGoToPage()}
-                className="w-14 rounded-md border border-white/10 bg-white/5 px-2 py-1 text-xs text-white/60 outline-none transition focus:border-lagoon/40 text-center"
+                className="w-14 rounded-md border border-[#D0E4D8] bg-white px-2 py-1 text-xs text-[#3A5A4A] outline-none transition focus:border-[#26C0BD] text-center"
                 placeholder={String(currentPage)}
               />
               <button
                 onClick={handleGoToPage}
-                className="rounded-md border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-white/50 transition hover:border-lagoon/35 hover:bg-lagoon/10 hover:text-lagoon"
+                className="rounded-md border border-[#D0E4D8] bg-white px-2.5 py-1 text-xs text-[#5A7A6A] transition hover:border-[#26C0BD] hover:bg-[#F0FAF5] hover:text-[#26C0BD]"
               >
                 Go
               </button>
@@ -726,11 +726,11 @@ export function MessageTable() {
       {/* === BULK ACTION BAR === */}
       {selectedRows.size > 0 && (
         <div className="fixed bottom-6 left-1/2 z-50 animate-slide-up">
-          <div className="flex items-center gap-2 rounded-full border border-white/12 bg-[#062e25] px-5 py-3 shadow-2xl shadow-black/50 backdrop-blur-sm">
-            <span className="text-sm font-semibold text-white">
+          <div className="flex items-center gap-2 rounded-full border border-[#E0EBE4] bg-white px-5 py-3 shadow-2xl shadow-[#0A1F16]/10 backdrop-blur-sm">
+            <span className="text-sm font-semibold text-[#0A1F16]">
               {selectedRows.size} đã chọn
             </span>
-            <div className="mx-2 h-4 w-px bg-white/15" />
+            <div className="mx-2 h-4 w-px bg-[#E0EBE4]" />
             <button
               onClick={() => setSelectedRows(new Set())}
               className="inline-flex items-center gap-1.5 rounded-lg border border-lagoon/30 bg-lagoon/15 px-3 py-1.5 text-xs font-medium text-lagoon transition hover:bg-lagoon/25"
@@ -740,7 +740,7 @@ export function MessageTable() {
             </button>
             <button
               onClick={handleExport}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/8 px-3 py-1.5 text-xs font-medium text-white/70 transition hover:bg-white/15 hover:text-white"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-[#D0E4D8] bg-[#F0F4F1] px-3 py-1.5 text-xs font-medium text-[#5A7A6A] transition hover:bg-[#E6F7F0] hover:text-[#0A1F16]"
             >
               <Download size={12} />
               Xuất
@@ -767,19 +767,19 @@ export function MessageTable() {
 
 function SkeletonRows() {
   return (
-    <div className="divide-y divide-white/[0.05]">
+    <div className="divide-y divide-[#F0F4F1]">
       {Array.from({ length: 7 }).map((_, i) => (
         <div key={i} className="flex items-center gap-4 px-4 py-3.5 animate-pulse">
-          <div className="h-3.5 w-3.5 rounded bg-white/6" />
+          <div className="h-3.5 w-3.5 rounded bg-[#E0EBE4]/60" />
           <div className="flex items-center gap-2.5">
-            <div className="h-8 w-8 rounded-full bg-white/6" />
-            <div className="h-4 w-24 rounded-md bg-white/6" />
+            <div className="h-8 w-8 rounded-full bg-[#E0EBE4]/60" />
+            <div className="h-4 w-24 rounded-md bg-[#E0EBE4]/60" />
           </div>
-          <div className="h-3.5 flex-1 rounded-md bg-white/5" />
-          <div className="h-6 w-14 rounded-full bg-white/6" />
-          <div className="h-5 w-16 rounded-full bg-white/5" />
-          <div className="h-4 w-20 rounded-md bg-white/5" />
-          <div className="h-7 w-7 rounded-md bg-white/6" />
+          <div className="h-3.5 flex-1 rounded-md bg-[#E0EBE4]/50" />
+          <div className="h-6 w-14 rounded-full bg-[#E0EBE4]/60" />
+          <div className="h-5 w-16 rounded-full bg-[#E0EBE4]/50" />
+          <div className="h-4 w-20 rounded-md bg-[#E0EBE4]/50" />
+          <div className="h-7 w-7 rounded-md bg-[#E0EBE4]/60" />
         </div>
       ))}
     </div>
@@ -802,8 +802,8 @@ function EmptyState({
   const hasDateFilter = dateRange.from || dateRange.to;
   return (
     <div className="flex flex-col items-center gap-3 py-20 text-center">
-      <Inbox size={36} className="text-white/15" />
-      <p className="text-sm text-white/35">
+      <Inbox size={36} className="text-[#5A7A6A]/40" />
+      <p className="text-sm text-[#5A7A6A]">
         {search
           ? `Không tìm thấy hội thoại với "${search}"`
           : labelFilter

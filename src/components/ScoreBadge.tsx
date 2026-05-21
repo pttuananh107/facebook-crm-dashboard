@@ -26,10 +26,10 @@ const config: Record<
   },
   Cold: {
     label: "Cold",
-    bg: "rgba(255, 255, 255, 0.06)",
-    text: "rgba(255, 255, 255, 0.4)",
-    dot: "rgba(255, 255, 255, 0.25)",
-    border: "rgba(255, 255, 255, 0.12)",
+    bg: "rgba(90, 122, 106, 0.1)",
+    text: "#5A7A6A",
+    dot: "#5A7A6A",
+    border: "rgba(90, 122, 106, 0.3)",
   },
 };
 

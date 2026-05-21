@@ -45,9 +45,9 @@ export function SummaryCards({ stats, loading }: SummaryCardsProps) {
       {CARDS.map(({ key, label, Icon, color, glow }) => (
         <div
           key={key}
-          className="flex flex-col gap-3 rounded-xl border border-white/10 px-5 py-4 transition-all duration-150 hover:border-white/20"
+          className="flex flex-col gap-3 rounded-xl border border-[#E0EBE4] bg-white px-5 py-4 shadow-sm transition-all duration-150 hover:border-[#26C0BD]/40"
           style={{
-            background: `linear-gradient(135deg, ${glow} 0%, rgba(255,255,255,0.03) 100%)`,
+            background: `linear-gradient(135deg, ${glow} 0%, #FFFFFF 100%)`,
           }}
         >
           <div className="flex items-center justify-between">
@@ -57,18 +57,17 @@ export function SummaryCards({ stats, loading }: SummaryCardsProps) {
           {loading ? (
             <div
               className="h-9 w-16 animate-pulse rounded-lg"
-              style={{ background: `${color}18` }}
+              style={{ background: `${color}20` }}
             />
           ) : (
             <p
-              className="text-[32px] font-bold leading-none tabular-nums"
-              style={{ color }}
+              className="text-[32px] font-bold leading-none tabular-nums text-[#052D24]"
             >
               {stats[key].toLocaleString("vi-VN")}
             </p>
           )}
 
-          <p className="text-xs text-white/35 leading-tight">{label}</p>
+          <p className="text-xs text-[#5A7A6A] leading-tight">{label}</p>
         </div>
       ))}
     </div>

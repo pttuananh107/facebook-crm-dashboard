@@ -36,7 +36,7 @@ export function DateFilter({ value, onChange }: DateFilterProps) {
     <div className="flex flex-wrap items-center gap-2">
       <div className="flex items-center gap-1.5">
         <CalendarDays size={13} className="text-lagoon/60" />
-        <span className="text-xs font-medium text-white/40 hidden sm:inline">Thời gian:</span>
+        <span className="text-xs font-medium text-[#5A7A6A] hidden sm:inline">Thời gian:</span>
       </div>
 
       {QUICK.map(({ label, getDates }) => {
@@ -50,7 +50,7 @@ export function DateFilter({ value, onChange }: DateFilterProps) {
               "rounded-md border px-2.5 py-1 text-xs font-medium transition-all duration-150",
               isActive
                 ? "bg-lagoon/20 text-lagoon border-lagoon/40"
-                : "bg-white/5 text-white/50 border-white/10 hover:bg-white/10 hover:text-white/80"
+                : "bg-white text-[#5A7A6A] border-[#D0E4D8] hover:bg-[#F0FAF5] hover:text-[#0A1F16]"
             )}
           >
             {label}
@@ -64,16 +64,16 @@ export function DateFilter({ value, onChange }: DateFilterProps) {
           value={value.from}
           max={value.to || undefined}
           onChange={(e) => onChange({ ...value, from: e.target.value })}
-          className="rounded-md border border-white/10 bg-white/5 px-2 py-1 text-xs text-white/70 outline-none transition focus:border-lagoon/40 focus:ring-1 focus:ring-lagoon/25"
+          className="rounded-md border border-[#D0E4D8] bg-white px-2 py-1 text-xs text-[#3A5A4A] outline-none transition focus:border-[#26C0BD] focus:ring-1 focus:ring-[#26C0BD]/25"
           title="Từ ngày"
         />
-        <span className="text-white/25 text-xs font-bold">→</span>
+        <span className="text-[#5A7A6A] text-xs font-bold">→</span>
         <input
           type="date"
           value={value.to}
           min={value.from || undefined}
           onChange={(e) => onChange({ ...value, to: e.target.value })}
-          className="rounded-md border border-white/10 bg-white/5 px-2 py-1 text-xs text-white/70 outline-none transition focus:border-lagoon/40 focus:ring-1 focus:ring-lagoon/25"
+          className="rounded-md border border-[#D0E4D8] bg-white px-2 py-1 text-xs text-[#3A5A4A] outline-none transition focus:border-[#26C0BD] focus:ring-1 focus:ring-[#26C0BD]/25"
           title="Đến ngày"
         />
       </div>
@@ -82,7 +82,7 @@ export function DateFilter({ value, onChange }: DateFilterProps) {
         <button
           onClick={() => onChange({ from: "", to: "" })}
           title="Xóa filter ngày"
-          className="flex items-center gap-1 rounded-md border border-white/10 bg-white/5 px-2 py-1 text-xs text-white/40 transition hover:border-red-500/40 hover:text-red-400"
+          className="flex items-center gap-1 rounded-md border border-[#D0E4D8] bg-white px-2 py-1 text-xs text-[#5A7A6A] transition hover:border-red-400 hover:text-red-500"
         >
           <X size={12} />
           <span className="hidden sm:inline">Xóa</span>

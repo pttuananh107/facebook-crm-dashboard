@@ -33,30 +33,30 @@ export function ConversationPanel({ conversation, onClose }: ConversationPanelPr
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 z-30 bg-night/30 backdrop-blur-[2px]"
+        className="fixed inset-0 z-30 bg-[#0A1F16]/15 backdrop-blur-[2px]"
         onClick={onClose}
       />
 
       {/* Side panel */}
-      <div className="fixed right-0 top-0 z-40 flex h-full w-full max-w-[420px] flex-col border-l border-lagoon/30 bg-white shadow-2xl shadow-night/20">
+      <div className="fixed right-0 top-0 z-40 flex h-full w-full max-w-[420px] flex-col border-l border-lagoon/30 bg-white shadow-2xl shadow-[#0A1F16]/10">
 
         {/* Header */}
-        <div className="flex shrink-0 items-center gap-3 border-b border-lagoon/20 bg-night px-4 py-3">
+        <div className="flex shrink-0 items-center gap-3 border-b border-[#E0EBE4] bg-[#F0F4F1] px-4 py-3">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-lagoon/20 text-lagoon">
             <User size={15} />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="truncate text-sm font-semibold text-white">
+            <p className="truncate text-sm font-semibold text-[#0A1F16]">
               {conversation.sender_name ?? conversation.sender_id}
             </p>
-            <p className="truncate font-mono text-xs text-white/40">
+            <p className="truncate font-mono text-xs text-[#5A7A6A]">
               {conversation.sender_id}
             </p>
           </div>
           <ScoreBadge score={conversation.score} />
           <button
             onClick={onClose}
-            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white/40 transition hover:bg-white/10 hover:text-white"
+            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[#5A7A6A] transition hover:bg-[#E0EBE4] hover:text-[#0A1F16]"
           >
             <X size={16} />
           </button>

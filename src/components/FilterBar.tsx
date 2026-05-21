@@ -29,7 +29,7 @@ export function FilterBar({ active, counts, onChange }: FilterBarProps) {
             "inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-all duration-150",
             active === value
               ? "bg-lagoon/20 text-lagoon border-lagoon/50 shadow-sm shadow-lagoon/10"
-              : "bg-white/5 text-white/55 border-white/10 hover:bg-white/10 hover:text-white/90 hover:border-white/20"
+              : "bg-white text-[#5A7A6A] border-[#D0E4D8] hover:bg-[#F0FAF5] hover:text-[#0A1F16] hover:border-[#D0E4D8]"
           )}
         >
           {label}
@@ -38,7 +38,7 @@ export function FilterBar({ active, counts, onChange }: FilterBarProps) {
               "rounded-full px-1.5 py-0.5 text-[10px] font-bold tabular-nums",
               active === value
                 ? "bg-lagoon/20 text-lagoon"
-                : "bg-white/8 text-white/40"
+                : "bg-[#F0F4F1] text-[#5A7A6A]"
             )}
           >
             {counts[value] ?? 0}

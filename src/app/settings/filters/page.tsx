@@ -236,14 +236,14 @@ export default function FilterSettingsPage() {
   return (
     <div className="min-h-screen bg-desert-bg">
       {/* Header */}
-      <header className="sticky top-0 z-10 border-b border-lagoon/30 bg-night shadow-sm shadow-lagoon/10">
+      <header className="sticky top-0 z-10 border-b border-[#E0EBE4] bg-[#F0F4F1] shadow-sm shadow-[#0A1F16]/5">
         <div className="mx-auto flex max-w-3xl items-center gap-3 px-4 py-3 sm:px-6">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-lagoon">
             <SlidersHorizontal size={15} className="text-night" />
           </div>
           <div>
-            <h1 className="text-sm font-bold leading-none text-white">Facebook CRM</h1>
-            <p className="mt-0.5 text-xs text-white/50">Cài đặt bộ lọc theo Fanpage</p>
+            <h1 className="text-sm font-bold leading-none text-[#0A1F16]">Facebook CRM</h1>
+            <p className="mt-0.5 text-xs text-[#5A7A6A]">Cài đặt bộ lọc theo Fanpage</p>
           </div>
         </div>
       </header>

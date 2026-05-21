@@ -33,10 +33,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-night">
+      <div className="flex min-h-screen items-center justify-center bg-[#F5F7F5]">
         <div className="flex flex-col items-center gap-3">
           <div className="h-8 w-8 animate-spin rounded-full border-2 border-lagoon border-t-transparent" />
-          <p className="text-xs text-white/30">Đang tải...</p>
+          <p className="text-xs text-[#5A7A6A]">Đang tải...</p>
         </div>
       </div>
     );
@@ -45,7 +45,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-night">
+    <div className="min-h-screen bg-[#F5F7F5]">
       <Sidebar expanded={expanded} onToggle={() => setExpanded((v) => !v)} />
       <div
         className="transition-all duration-200"

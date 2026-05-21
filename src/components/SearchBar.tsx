@@ -12,19 +12,19 @@ export function SearchBar({ value, onChange }: SearchBarProps) {
     <div className="relative flex-1 min-w-[180px]">
       <Search
         size={14}
-        className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none"
+        className="absolute left-3 top-1/2 -translate-y-1/2 text-[#5A7A6A] pointer-events-none"
       />
       <input
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Tìm tên khách hàng..."
-        className="w-full rounded-lg border border-white/10 bg-white/5 py-2 pl-9 pr-9 text-sm text-white placeholder-white/25 outline-none transition focus:border-lagoon/40 focus:bg-white/8 focus:ring-1 focus:ring-lagoon/25"
+        className="w-full rounded-lg border border-[#D0E4D8] bg-white py-2 pl-9 pr-9 text-sm text-[#0A1F16] placeholder-[#5A7A6A]/60 outline-none transition focus:border-[#26C0BD] focus:bg-white focus:ring-1 focus:ring-[#26C0BD]/25"
       />
       {value && (
         <button
           onClick={() => onChange("")}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-white/25 hover:text-white/70 transition"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5A7A6A] hover:text-[#0A1F16] transition"
         >
           <X size={13} />
         </button>

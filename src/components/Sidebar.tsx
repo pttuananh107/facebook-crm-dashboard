@@ -79,8 +79,8 @@ function NavItem({
         "relative flex items-center gap-3 rounded-lg py-2 text-sm transition-all duration-150",
         expanded ? "px-3" : "justify-center px-0",
         active
-          ? "bg-lagoon/20 text-white"
-          : "text-white/50 hover:bg-white/5 hover:text-white/90"
+          ? "bg-[#E6F7F0] text-[#052D24]"
+          : "text-[#3A5A4A] hover:bg-[#F5FBF7] hover:text-[#0A1F16]"
       )}
     >
       {active && (
@@ -120,19 +120,19 @@ export function Sidebar({ expanded, onToggle }: SidebarProps) {
       ? "text-[#F2B609]"
       : profile?.role === "admin"
       ? "text-lagoon"
-      : "text-white/40";
+      : "text-[#5A7A6A]";
 
   return (
     <aside
       className={clsx(
-        "fixed left-0 top-0 z-20 flex h-screen flex-col border-r border-white/[0.08] bg-night transition-all duration-200",
+        "fixed left-0 top-0 z-20 flex h-screen flex-col border-r border-[#E0EBE4] bg-[#F0F4F1] transition-all duration-200",
         expanded ? "w-60" : "w-14"
       )}
     >
       {/* Logo */}
       <div
         className={clsx(
-          "flex items-center border-b border-white/[0.08] px-3 py-4",
+          "flex items-center border-b border-[#E0EBE4] px-3 py-4",
           expanded ? "justify-between" : "justify-center"
         )}
       >
@@ -142,10 +142,10 @@ export function Sidebar({ expanded, onToggle }: SidebarProps) {
           </div>
           {expanded && (
             <div className="min-w-0">
-              <p className="truncate text-sm font-bold text-white leading-tight">
+              <p className="truncate text-sm font-bold text-[#0A1F16] leading-tight">
                 Facebook CRM
               </p>
-              <p className="truncate text-[10px] text-white/35 leading-tight mt-0.5">
+              <p className="truncate text-[10px] text-[#5A7A6A] leading-tight mt-0.5">
                 Lead Intelligence
               </p>
             </div>
@@ -154,7 +154,7 @@ export function Sidebar({ expanded, onToggle }: SidebarProps) {
         {expanded && (
           <button
             onClick={onToggle}
-            className="ml-2 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-white/30 transition hover:bg-white/8 hover:text-white/70"
+            className="ml-2 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-[#5A7A6A] transition hover:bg-[#E6F7F0] hover:text-[#3A5A4A]"
           >
             <ChevronLeft size={14} />
           </button>
@@ -166,7 +166,7 @@ export function Sidebar({ expanded, onToggle }: SidebarProps) {
         <div className="flex justify-center pt-3">
           <button
             onClick={onToggle}
-            className="flex h-7 w-7 items-center justify-center rounded-md text-white/30 transition hover:bg-white/8 hover:text-lagoon"
+            className="flex h-7 w-7 items-center justify-center rounded-md text-[#5A7A6A] transition hover:bg-[#E6F7F0] hover:text-lagoon"
           >
             <ChevronRight size={14} />
           </button>
@@ -176,10 +176,10 @@ export function Sidebar({ expanded, onToggle }: SidebarProps) {
       {/* Search bar */}
       {expanded && (
         <div className="px-3 pt-3 pb-1">
-          <div className="flex items-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.05] px-3 py-2 text-xs text-white/30 transition cursor-pointer hover:border-lagoon/30 hover:text-white/50">
+          <div className="flex items-center gap-2 rounded-lg border border-[#D0E4D8] bg-white px-3 py-2 text-xs text-[#5A7A6A] transition cursor-pointer hover:border-[#26C0BD]/50 hover:text-[#3A5A4A]">
             <Search size={12} className="shrink-0" />
             <span className="flex-1">Tìm kiếm...</span>
-            <kbd className="inline-flex items-center rounded border border-white/10 bg-white/5 px-1 py-0.5 text-[9px] text-white/20 font-mono">
+            <kbd className="inline-flex items-center rounded border border-[#D0E4D8] bg-[#F0F4F1] px-1 py-0.5 text-[9px] text-[#5A7A6A]/50 font-mono">
               ⌘K
             </kbd>
           </div>
@@ -190,11 +190,11 @@ export function Sidebar({ expanded, onToggle }: SidebarProps) {
       <nav className="mt-2 flex flex-1 flex-col gap-0.5 overflow-y-auto px-2 pb-2">
         {/* Main Menu */}
         {expanded && (
-          <p className="px-2 pb-1 pt-2 text-[9px] font-bold uppercase tracking-[0.12em] text-white/20">
+          <p className="px-2 pb-1 pt-2 text-[9px] font-bold uppercase tracking-[0.12em] text-[#5A7A6A]/70">
             Main Menu
           </p>
         )}
-        {!expanded && <div className="my-1.5 mx-1 h-px bg-white/[0.08]" />}
+        {!expanded && <div className="my-1.5 mx-1 h-px bg-[#E0EBE4]" />}
 
         {MAIN_NAV.filter((item) => isVisible(item.roles)).map((item) => (
           <NavItem
@@ -209,14 +209,14 @@ export function Sidebar({ expanded, onToggle }: SidebarProps) {
 
         {/* Divider */}
         {expanded ? (
-          <div className="my-2 mx-1 h-px bg-white/[0.08]" />
+          <div className="my-2 mx-1 h-px bg-[#E0EBE4]" />
         ) : (
-          <div className="my-1.5 mx-1 h-px bg-white/[0.08]" />
+          <div className="my-1.5 mx-1 h-px bg-[#E0EBE4]" />
         )}
 
         {/* Tools */}
         {expanded && (
-          <p className="px-2 pb-1 text-[9px] font-bold uppercase tracking-[0.12em] text-white/20">
+          <p className="px-2 pb-1 text-[9px] font-bold uppercase tracking-[0.12em] text-[#5A7A6A]/70">
             Tools
           </p>
         )}
@@ -234,14 +234,14 @@ export function Sidebar({ expanded, onToggle }: SidebarProps) {
       </nav>
 
       {/* Footer */}
-      <div className="border-t border-white/[0.08] p-2 space-y-1">
+      <div className="border-t border-[#E0EBE4] p-2 space-y-1">
         {profile && expanded && (
-          <div className="flex items-center gap-2.5 rounded-lg px-2 py-2 transition hover:bg-white/5 cursor-default">
+          <div className="flex items-center gap-2.5 rounded-lg bg-[#E6F7F0] px-2 py-2 cursor-default">
             <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-lagoon/20 text-xs font-bold uppercase text-lagoon ring-2 ring-lagoon/20">
               {(profile.full_name ?? profile.email ?? "U")[0].toUpperCase()}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-xs font-semibold text-white/90 leading-tight">
+              <p className="truncate text-xs font-semibold text-[#0A1F16] leading-tight">
                 {profile.full_name ?? profile.email}
               </p>
               <span
@@ -271,7 +271,7 @@ export function Sidebar({ expanded, onToggle }: SidebarProps) {
           onClick={handleSignOut}
           title="Đăng xuất"
           className={clsx(
-            "flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-xs text-white/35 transition hover:bg-red-500/10 hover:text-red-400",
+            "flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-xs text-[#5A7A6A] transition hover:bg-red-50 hover:text-red-500",
             !expanded && "justify-center"
           )}
         >
