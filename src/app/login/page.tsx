@@ -1,16 +1,18 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-import { Zap, Loader2, AlertCircle } from "lucide-react";
+import { Zap, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const passwordChanged = searchParams.get("success") === "password_changed";
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -49,6 +51,12 @@ export default function LoginPage() {
         </div>
         <div className="rounded-xl border border-lagoon/30 bg-white shadow-sm shadow-lagoon/10 p-6">
           <h2 className="mb-5 text-sm font-semibold text-night">Đăng nhập</h2>
+          {passwordChanged && (
+            <div className="flex items-center gap-2 rounded-lg border border-lagoon/30 bg-lagoon/10 px-3 py-2 text-xs text-lagoon mb-4">
+              <CheckCircle2 size={13} />
+              Đổi mật khẩu thành công, vui lòng đăng nhập lại
+            </div>
+          )}
           <form onSubmit={handleLogin} className="flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-medium text-night/60">Email</label>
