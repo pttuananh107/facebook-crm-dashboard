@@ -1,0 +1,1 @@
+ALTER TABLE conversations ADD COLUMN IF NOT EXISTS score_reasons TEXT[] DEFAULT ARRAY[]::TEXT[];

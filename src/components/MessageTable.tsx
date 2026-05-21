@@ -243,7 +243,7 @@ export function MessageTable() {
 
                       {/* Score */}
                       <td className="px-4 py-3 text-center">
-                        <ScoreBadge score={conv.score} />
+                        <ScoreBadge score={conv.score} reasons={conv.score_reasons} />
                       </td>
 
                       {/* Arrow */}

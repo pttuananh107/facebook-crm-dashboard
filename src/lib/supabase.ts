@@ -34,6 +34,7 @@ export interface Conversation {
   ad_id?: string;
   ad_title?: string;
   referral_source?: string;
+  score_reasons?: string[];
   first_message_at?: string;
   last_message_at?: string;
   created_at?: string;
