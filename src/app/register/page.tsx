@@ -45,7 +45,7 @@ function RegisterForm() {
 
     const userId = data.user?.id;
     if (userId) {
-      await supabase.from("user_profiles").upsert({
+      await (supabase.from("user_profiles") as any).upsert({
         id: userId,
         email,
         full_name: fullName,
