@@ -110,19 +110,27 @@ export default function UsersPage() {
 
   async function approveUser(userId: string) {
     const role = approveRole[userId] ?? "viewer";
+    const user = users.find((u) => u.id === userId);
+    const assigned_page_ids =
+      edits[userId]?.assigned_page_ids ?? user?.assigned_page_ids ?? [];
     setSaving(userId);
     const { error: err } = await supabase
       .from("user_profiles")
-      .update({ status: "active", role } as never)
+      .update({ status: "active", role, assigned_page_ids } as never)
       .eq("id", userId);
     if (err) {
       alert(err.message);
     } else {
       setUsers((prev) => {
         const updated = prev.map((u) =>
-          u.id === userId ? { ...u, status: "active" as const, role } : u
+          u.id === userId ? { ...u, status: "active" as const, role, assigned_page_ids } : u
         );
         return updated.sort((a, b) => STATUS_ORDER[a.status] - STATUS_ORDER[b.status]);
+      });
+      setEdits((prev) => {
+        const next = { ...prev };
+        delete next[userId];
+        return next;
       });
     }
     setSaving(null);
