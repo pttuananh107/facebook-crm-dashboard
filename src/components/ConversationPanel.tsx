@@ -15,11 +15,16 @@ function formatTime(iso: string): string {
 }
 
 function formatShortTime(iso: string): string {
-  return new Date(iso).toLocaleTimeString("vi-VN", {
-    timeZone: "Asia/Ho_Chi_Minh",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  const d = new Date(iso);
+  const now = new Date();
+  const tz = "Asia/Ho_Chi_Minh";
+  const timeStr = d.toLocaleTimeString("vi-VN", { timeZone: tz, hour: "2-digit", minute: "2-digit" });
+  const todayStr = now.toLocaleDateString("sv-SE", { timeZone: tz });
+  const msgStr = d.toLocaleDateString("sv-SE", { timeZone: tz });
+  if (msgStr === todayStr) return timeStr;
+  const [y, m, day] = msgStr.split("-");
+  const sameYear = y === todayStr.split("-")[0];
+  return sameYear ? `${day}/${m} ${timeStr}` : `${day}/${m}/${y} ${timeStr}`;
 }
 
 export function ConversationPanel({ conversation, onClose }: ConversationPanelProps) {
