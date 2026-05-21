@@ -29,20 +29,19 @@ function LoginForm() {
     setError(null);
     setPendingError(false);
 
-    const { error: err } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error: err } = await supabase.auth.signInWithPassword({ email, password });
     if (err) {
       setError(err.message);
       setLoading(false);
       return;
     }
 
-    // Check profile status before allowing access
-    const { data: { session } } = await supabase.auth.getSession();
-    if (session?.user) {
+    const userId = data.user?.id;
+    if (userId) {
       const { data: profileData } = await supabase
         .from("user_profiles")
         .select("status")
-        .eq("id", session.user.id)
+        .eq("id", userId)
         .maybeSingle();
 
       if ((profileData as { status?: string } | null)?.status === "pending") {
