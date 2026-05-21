@@ -3,35 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
-type AnyRecord = Record<string, unknown>;
-type AnyTable = { Row: AnyRecord; Insert: AnyRecord; Update: AnyRecord };
-type LooseDatabase = {
-  public: {
-    Tables: { [key: string]: AnyTable };
-    Views: { [key: string]: { Row: AnyRecord } };
-    Functions: { [key: string]: unknown };
-    Enums: { [key: string]: unknown };
-  };
-};
-
-// Singleton pattern - avoid Multiple GoTrueClient warning
-const globalForSupabase = globalThis as unknown as {
-  supabase: ReturnType<typeof createClient<LooseDatabase>> | undefined;
-};
-
-export const supabase =
-  globalForSupabase.supabase ??
-  createClient<LooseDatabase>(supabaseUrl, supabaseAnonKey, {
-    auth: {
-      persistSession: true,
-      storageKey: "fb-crm-auth",
-    },
-  });
-
-if (process.env.NODE_ENV !== "production") {
-  globalForSupabase.supabase = supabase;
-}
-
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export type Score = "Hot" | "Warm" | "Cold";
 
