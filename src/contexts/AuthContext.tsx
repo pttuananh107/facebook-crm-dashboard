@@ -26,23 +26,18 @@ const AuthContext = createContext<AuthContextValue>({
   signOut: async () => {},
 });
 
-async function fetchOrCreateProfile(userId: string, email: string): Promise<UserProfile | null> {
+async function fetchProfile(userId: string): Promise<UserProfile | null> {
   const { data, error } = await supabase
     .from("user_profiles")
     .select("*")
     .eq("id", userId)
-    .single();
+    .maybeSingle();
 
-  if (!error && data) return data as UserProfile;
-
-  // Profile doesn't exist — create with viewer role
-  const { data: created } = await supabase
-    .from("user_profiles")
-    .insert({ id: userId, email, role: "viewer" } as never)
-    .select()
-    .single();
-
-  return (created as unknown as UserProfile) ?? null;
+  if (error) {
+    console.error("[AuthContext] fetchProfile error:", error.message);
+    return null;
+  }
+  return data as UserProfile | null;
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -51,30 +46,42 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let mounted = true;
+
     supabase.auth.getSession().then(async ({ data: { session } }) => {
+      if (!mounted) return;
       const u = session?.user ?? null;
       setUser(u);
       if (u) {
-        const p = await fetchOrCreateProfile(u.id, u.email ?? "");
-        setProfile(p);
+        const p = await fetchProfile(u.id);
+        if (mounted) setProfile(p);
       }
-      setLoading(false);
+      if (mounted) setLoading(false);
     });
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      const u = session?.user ?? null;
-      setUser(u);
-      if (u) {
-        const p = await fetchOrCreateProfile(u.id, u.email ?? "");
-        setProfile(p);
-      } else {
-        setProfile(null);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (!mounted) return;
+        if (event === "SIGNED_OUT") {
+          setUser(null);
+          setProfile(null);
+          setLoading(false);
+          return;
+        }
+        const u = session?.user ?? null;
+        setUser(u);
+        if (u) {
+          const p = await fetchProfile(u.id);
+          if (mounted) setProfile(p);
+        }
+        if (mounted) setLoading(false);
       }
-    });
+    );
 
-    return () => subscription.unsubscribe();
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   async function signOut() {
