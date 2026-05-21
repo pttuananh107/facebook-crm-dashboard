@@ -9,6 +9,7 @@ import {
   ChevronRight,
   LogOut,
   Zap,
+  SlidersHorizontal,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import clsx from "clsx";
@@ -36,6 +37,12 @@ const NAV_ITEMS = [
     label: "Users",
     href: "/users",
     roles: ["super_admin"] as const,
+  },
+  {
+    icon: SlidersHorizontal,
+    label: "Bộ lọc",
+    href: "/settings/filters",
+    roles: ["super_admin", "admin"] as const,
   },
 ];
 
@@ -101,7 +108,7 @@ export function Sidebar({ expanded, onToggle }: SidebarProps) {
       {/* Nav */}
       <nav className="mt-4 flex flex-1 flex-col gap-1 px-2">
         {visibleItems.map(({ icon: Icon, label, href }) => {
-          const active = pathname === href;
+          const active = href === "/" ? pathname === href : pathname.startsWith(href);
           return (
             <Link
               key={href}
