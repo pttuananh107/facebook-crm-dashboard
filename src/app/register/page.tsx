@@ -1,13 +1,11 @@
 "use client";
 
 import { useState, Suspense } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { Zap, Loader2, AlertCircle, CheckCircle } from "lucide-react";
 
 function RegisterForm() {
-  const router = useRouter();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,19 +43,21 @@ function RegisterForm() {
 
     const userId = data.user?.id;
     if (userId) {
-      await (supabase.from("user_profiles") as any).upsert({
-        id: userId,
-        email,
-        full_name: fullName,
-        role: "viewer",
-        status: "pending",
-        assigned_page_ids: [],
+      // Dùng API route với service role key để insert profile
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, email, fullName }),
       });
+      if (!res.ok) {
+        const { error: apiErr } = await res.json();
+        setError(apiErr ?? "Không thể tạo profile");
+        setLoading(false);
+        return;
+      }
     }
 
-    // Sign out immediately so the pending user isn't auto-logged in
     await supabase.auth.signOut();
-
     setLoading(false);
     setSuccess(true);
   }
@@ -77,10 +77,7 @@ function RegisterForm() {
                 Bạn sẽ nhận được thông báo khi được cấp quyền truy cập.
               </p>
             </div>
-            <Link
-              href="/login"
-              className="mt-2 text-xs font-medium text-lagoon hover:underline"
-            >
+            <Link href="/login" className="mt-2 text-xs font-medium text-lagoon hover:underline">
               Quay về đăng nhập
             </Link>
           </div>
@@ -106,68 +103,38 @@ function RegisterForm() {
           <form onSubmit={handleRegister} className="flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-medium text-night/60">Họ và tên</label>
-              <input
-                type="text"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                required
-                placeholder="Nguyễn Văn A"
-                className="rounded-lg border border-lagoon/50 bg-desert-surface px-3 py-2.5 text-sm text-night outline-none transition focus:ring-2 focus:ring-lagoon/30 placeholder:text-night/30"
-              />
+              <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} required placeholder="Nguyễn Văn A"
+                className="rounded-lg border border-lagoon/50 bg-desert-surface px-3 py-2.5 text-sm text-night outline-none transition focus:ring-2 focus:ring-lagoon/30 placeholder:text-night/30" />
             </div>
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-medium text-night/60">Email</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                placeholder="you@example.com"
-                className="rounded-lg border border-lagoon/50 bg-desert-surface px-3 py-2.5 text-sm text-night outline-none transition focus:ring-2 focus:ring-lagoon/30 placeholder:text-night/30"
-              />
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder="you@example.com"
+                className="rounded-lg border border-lagoon/50 bg-desert-surface px-3 py-2.5 text-sm text-night outline-none transition focus:ring-2 focus:ring-lagoon/30 placeholder:text-night/30" />
             </div>
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-medium text-night/60">Mật khẩu</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                placeholder="••••••••"
-                className="rounded-lg border border-lagoon/50 bg-desert-surface px-3 py-2.5 text-sm text-night outline-none transition focus:ring-2 focus:ring-lagoon/30 placeholder:text-night/30"
-              />
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder="••••••••"
+                className="rounded-lg border border-lagoon/50 bg-desert-surface px-3 py-2.5 text-sm text-night outline-none transition focus:ring-2 focus:ring-lagoon/30 placeholder:text-night/30" />
             </div>
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-medium text-night/60">Xác nhận mật khẩu</label>
-              <input
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-                placeholder="••••••••"
-                className="rounded-lg border border-lagoon/50 bg-desert-surface px-3 py-2.5 text-sm text-night outline-none transition focus:ring-2 focus:ring-lagoon/30 placeholder:text-night/30"
-              />
+              <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required placeholder="••••••••"
+                className="rounded-lg border border-lagoon/50 bg-desert-surface px-3 py-2.5 text-sm text-night outline-none transition focus:ring-2 focus:ring-lagoon/30 placeholder:text-night/30" />
             </div>
             {error && (
               <div className="flex items-center gap-2 rounded-lg border border-terracotta/30 bg-terracotta/5 px-3 py-2 text-xs text-terracotta">
-                <AlertCircle size={13} />
-                {error}
+                <AlertCircle size={13} />{error}
               </div>
             )}
-            <button
-              type="submit"
-              disabled={loading}
-              className="flex items-center justify-center gap-2 rounded-lg bg-lagoon px-4 py-2.5 text-sm font-medium text-white shadow-sm shadow-lagoon/30 transition hover:bg-cactus-dim disabled:opacity-50"
-            >
+            <button type="submit" disabled={loading}
+              className="flex items-center justify-center gap-2 rounded-lg bg-lagoon px-4 py-2.5 text-sm font-medium text-white shadow-sm shadow-lagoon/30 transition hover:bg-cactus-dim disabled:opacity-50">
               {loading && <Loader2 size={14} className="animate-spin" />}
               Đăng ký
             </button>
           </form>
           <p className="mt-4 text-center text-xs text-night/50">
             Đã có tài khoản?{" "}
-            <Link href="/login" className="font-medium text-lagoon hover:underline">
-              Đăng nhập
-            </Link>
+            <Link href="/login" className="font-medium text-lagoon hover:underline">Đăng nhập</Link>
           </p>
         </div>
       </div>
@@ -176,9 +143,5 @@ function RegisterForm() {
 }
 
 export default function RegisterPage() {
-  return (
-    <Suspense>
-      <RegisterForm />
-    </Suspense>
-  );
+  return <Suspense><RegisterForm /></Suspense>;
 }
