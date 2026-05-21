@@ -12,35 +12,33 @@ interface FilterBarProps {
 }
 
 const FILTERS: { value: FilterValue; label: string }[] = [
-  { value: "All",  label: "All" },
-  { value: "Hot",  label: "🔥 Hot" },
+  { value: "All", label: "Tất cả" },
+  { value: "Hot", label: "🔥 Hot" },
   { value: "Warm", label: "☀️ Warm" },
   { value: "Cold", label: "🌵 Cold" },
 ];
 
 export function FilterBar({ active, counts, onChange }: FilterBarProps) {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-1.5">
       {FILTERS.map(({ value, label }) => (
         <button
           key={value}
           onClick={() => onChange(value)}
           className={clsx(
-            "inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-all duration-150",
+            "inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-all duration-150",
             active === value
-              // active: Lagoon Bloom bg, white text
-              ? "bg-lagoon text-white border-lagoon shadow-sm shadow-lagoon/30"
-              // inactive: white bg, Night text, Lagoon Bloom border
-              : "bg-white text-night border-lagoon hover:bg-desert-surface"
+              ? "bg-lagoon/20 text-lagoon border-lagoon/50 shadow-sm shadow-lagoon/10"
+              : "bg-white/5 text-white/55 border-white/10 hover:bg-white/10 hover:text-white/90 hover:border-white/20"
           )}
         >
           {label}
           <span
             className={clsx(
-              "rounded-full px-1.5 py-0.5 text-xs font-bold tabular-nums",
+              "rounded-full px-1.5 py-0.5 text-[10px] font-bold tabular-nums",
               active === value
-                ? "bg-white/20 text-white"
-                : "bg-lagoon/10 text-lagoon"
+                ? "bg-lagoon/20 text-lagoon"
+                : "bg-white/8 text-white/40"
             )}
           >
             {counts[value] ?? 0}

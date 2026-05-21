@@ -15,8 +15,8 @@ export function LabelFilter({ labels, value, onChange }: LabelFilterProps) {
   return (
     <div className="flex flex-wrap items-center gap-2">
       <div className="flex items-center gap-1.5 shrink-0">
-        <Tag size={14} className="text-lagoon" />
-        <span className="text-xs font-medium hidden sm:inline text-night/60">Labels:</span>
+        <Tag size={13} className="text-lagoon/60" />
+        <span className="text-xs font-medium text-white/40 hidden sm:inline">Labels:</span>
       </div>
 
       {labels.map((label) => (
@@ -26,8 +26,8 @@ export function LabelFilter({ labels, value, onChange }: LabelFilterProps) {
           className={clsx(
             "rounded-md border px-2.5 py-1 text-xs font-medium transition-all duration-150",
             value === label
-              ? "bg-lagoon text-white border-lagoon shadow-sm shadow-lagoon/20"
-              : "bg-white text-night border-lagoon/50 hover:border-lagoon hover:bg-desert-surface"
+              ? "bg-lagoon/20 text-lagoon border-lagoon/40"
+              : "bg-white/5 text-white/50 border-white/10 hover:bg-white/10 hover:text-white/80"
           )}
         >
           {label}
@@ -38,7 +38,7 @@ export function LabelFilter({ labels, value, onChange }: LabelFilterProps) {
         <button
           onClick={() => onChange(null)}
           title="Xóa filter label"
-          className="flex items-center gap-1 rounded-md border border-lagoon/40 bg-white px-2 py-1 text-xs text-night/50 transition hover:border-terracotta/60 hover:text-terracotta"
+          className="flex items-center gap-1 rounded-md border border-white/10 bg-white/5 px-2 py-1 text-xs text-white/40 transition hover:border-red-500/40 hover:text-red-400"
         >
           <X size={12} />
           <span className="hidden sm:inline">Xóa</span>

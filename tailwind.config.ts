@@ -45,6 +45,7 @@ const config: Config = {
       animation: {
         "fade-in": "fadeIn 0.3s ease-in-out",
         "pulse-dot": "pulseDot 2s infinite",
+        "slide-up": "slideUp 0.22s ease-out",
       },
       keyframes: {
         fadeIn: {
@@ -54,6 +55,10 @@ const config: Config = {
         pulseDot: {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0.4" },
+        },
+        slideUp: {
+          from: { opacity: "0", transform: "translateX(-50%) translateY(20px)" },
+          to: { opacity: "1", transform: "translateX(-50%) translateY(0)" },
         },
       },
     },

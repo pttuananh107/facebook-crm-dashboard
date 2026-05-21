@@ -1,87 +1,74 @@
 "use client";
 
-import { Flame, Sun, Megaphone, Leaf, MessagesSquare, Users } from "lucide-react";
+import { Flame, Megaphone, MessagesSquare, Users } from "lucide-react";
 import { type SummaryStats } from "@/hooks/useSummary";
-import clsx from "clsx";
 
 interface SummaryCardsProps {
   stats: SummaryStats;
   loading: boolean;
 }
 
-type CardDef = {
-  key: keyof SummaryStats;
-  label: string;
-  Icon: React.ElementType;
-  color: string;
-};
-
-const CARDS: CardDef[] = [
+const CARDS = [
   {
-    key: "total",
+    key: "total" as const,
     label: "Tổng hội thoại",
     Icon: MessagesSquare,
     color: "#26C0BD",
+    glow: "rgba(38, 192, 189, 0.12)",
   },
   {
-    key: "uniqueSenders",
-    label: "Người nhắn tin",
+    key: "uniqueSenders" as const,
+    label: "Unique senders",
     Icon: Users,
     color: "#26C0BD",
+    glow: "rgba(38, 192, 189, 0.12)",
   },
   {
-    key: "hot",
+    key: "hot" as const,
     label: "Hot leads",
     Icon: Flame,
     color: "#F2B609",
+    glow: "rgba(242, 182, 9, 0.12)",
   },
   {
-    key: "warm",
-    label: "Warm leads",
-    Icon: Sun,
-    color: "#40BA85",
-  },
-  {
-    key: "ads",
+    key: "ads" as const,
     label: "Từ quảng cáo",
     Icon: Megaphone,
     color: "#F2B609",
-  },
-  {
-    key: "organic",
-    label: "Organic",
-    Icon: Leaf,
-    color: "#26C0BD",
+    glow: "rgba(242, 182, 9, 0.12)",
   },
 ];
 
 export function SummaryCards({ stats, loading }: SummaryCardsProps) {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-      {CARDS.map(({ key, label, Icon, color }) => (
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      {CARDS.map(({ key, label, Icon, color, glow }) => (
         <div
           key={key}
-          className="flex flex-col justify-between rounded-xl border border-lagoon/20 bg-night px-4 py-4 shadow-sm shadow-lagoon/5"
+          className="flex flex-col gap-3 rounded-xl border border-white/10 px-5 py-4 transition-all duration-150 hover:border-white/20"
+          style={{
+            background: `linear-gradient(135deg, ${glow} 0%, rgba(255,255,255,0.03) 100%)`,
+          }}
         >
-          <Icon size={18} style={{ color }} className="mb-3 shrink-0" />
+          <div className="flex items-center justify-between">
+            <Icon size={16} style={{ color }} />
+          </div>
 
           {loading ? (
             <div
-              className="mb-1 h-7 w-14 animate-pulse rounded-md"
-              style={{ backgroundColor: `${color}22` }}
+              className="h-9 w-16 animate-pulse rounded-lg"
+              style={{ background: `${color}18` }}
             />
           ) : (
             <p
-              className="mb-0.5 text-2xl font-bold tabular-nums leading-none"
+              className="text-[32px] font-bold leading-none tabular-nums"
               style={{ color }}
             >
               {stats[key].toLocaleString("vi-VN")}
             </p>
           )}
 
-          <p className={clsx("text-xs", loading ? "text-white/20" : "text-white/45")}>
-            {label}
-          </p>
+          <p className="text-xs text-white/35 leading-tight">{label}</p>
         </div>
       ))}
     </div>
