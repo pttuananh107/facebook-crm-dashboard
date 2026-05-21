@@ -60,7 +60,7 @@ export function Sidebar({ expanded, onToggle }: SidebarProps) {
         expanded ? "w-48" : "w-14"
       )}
     >
-      {/* Header: logo + collapse button */}
+      {/* Header */}
       <div
         className={clsx(
           "flex items-center border-b border-lagoon/20 px-3 py-4",
@@ -81,20 +81,17 @@ export function Sidebar({ expanded, onToggle }: SidebarProps) {
           <button
             onClick={onToggle}
             className="ml-1 flex h-6 w-6 shrink-0 items-center justify-center rounded text-lagoon/60 transition hover:bg-lagoon/10 hover:text-lagoon"
-            title="Thu gọn"
           >
             <ChevronRight size={14} className="rotate-180" />
           </button>
         )}
       </div>
 
-      {/* Expand button when collapsed */}
       {!expanded && (
         <div className="flex justify-center pt-2">
           <button
             onClick={onToggle}
             className="flex h-6 w-6 items-center justify-center rounded text-lagoon/40 transition hover:bg-lagoon/10 hover:text-lagoon"
-            title="Mở rộng"
           >
             <ChevronRight size={12} />
           </button>
@@ -125,7 +122,7 @@ export function Sidebar({ expanded, onToggle }: SidebarProps) {
         })}
       </nav>
 
-      {/* Footer: user info + logout */}
+      {/* Footer */}
       <div className="border-t border-lagoon/20 p-2">
         {profile && (
           <div
@@ -152,7 +149,7 @@ export function Sidebar({ expanded, onToggle }: SidebarProps) {
                       : "text-white/50"
                   )}
                 >
-                  {profile.role}
+                  {profile.role === "super_admin" ? "Super Admin" : profile.role === "admin" ? "Admin" : "Viewer"}
                 </span>
               </div>
             )}
