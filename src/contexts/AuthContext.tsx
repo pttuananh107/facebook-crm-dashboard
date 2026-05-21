@@ -49,7 +49,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             .select("*")
             .eq("id", session.user.id)
             .maybeSingle();
-          console.log("[Auth] profile:", data?.role ?? "none", error?.message ?? "ok");
+          console.log("[Auth] profile:", (data as any)?.role ?? "none", error?.message ?? "ok");
           if (mounted) setProfile(data as UserProfile | null);
         }
       } catch (err) {
