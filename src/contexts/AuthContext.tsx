@@ -33,47 +33,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let mounted = true;
+    // Check session ngay lập tức từ localStorage
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      if (!session?.user) {
+        setLoading(false);
+        return;
+      }
+      setUser(session.user);
+      const { data } = await supabase
+        .from("user_profiles")
+        .select("*")
+        .eq("id", session.user.id)
+        .maybeSingle();
+      setProfile((data as unknown as UserProfile) ?? null);
+      setLoading(false);
+    });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        if (!mounted) return;
         console.log("[Auth] event:", event, session?.user?.email ?? "none");
-
-        if (!session?.user) {
+        if (event === "SIGNED_OUT") {
           setUser(null);
           setProfile(null);
           setLoading(false);
-          return;
-        }
-
-        // Xử lý tất cả events có session
-        setUser(session.user);
-        try {
-          const { data } = await supabase
-            .from("user_profiles")
-            .select("*")
-            .eq("id", session.user.id)
-            .maybeSingle();
-          if (mounted) setProfile((data as unknown as UserProfile) ?? null);
-        } catch (e) {
-          console.error("[Auth] profile fetch error:", e);
-        } finally {
-          if (mounted) setLoading(false);
         }
       }
     );
 
-    // Timeout fallback - tránh loading mãi mãi
-    const timeout = setTimeout(() => {
-      if (mounted) setLoading(false);
-    }, 5000);
-
-    return () => {
-      mounted = false;
-      subscription.unsubscribe();
-      clearTimeout(timeout);
-    };
+    return () => subscription.unsubscribe();
   }, []);
 
   async function signOut() {
