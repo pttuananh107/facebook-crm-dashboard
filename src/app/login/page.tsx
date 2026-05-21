@@ -14,6 +14,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log("[Login] existing session:", session?.user?.email ?? "none");
       if (session) router.replace("/");
     });
   }, [router]);
@@ -22,11 +23,14 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    const { error: err } = await supabase.auth.signInWithPassword({ email, password });
+    console.log("[Login] attempting login for:", email);
+    const { data, error: err } = await supabase.auth.signInWithPassword({ email, password });
+    console.log("[Login] result:", { user: data?.user?.email, error: err?.message });
     if (err) {
       setError(err.message);
       setLoading(false);
     } else {
+      console.log("[Login] success, redirecting...");
       router.replace("/");
     }
   }
@@ -34,7 +38,6 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-desert-bg flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
-        {/* Logo */}
         <div className="flex flex-col items-center gap-3 mb-8">
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-lagoon shadow-lg shadow-lagoon/30">
             <Zap size={22} className="text-night" fill="#052D24" />
@@ -44,8 +47,6 @@ export default function LoginPage() {
             <p className="text-sm text-night/50">Lead Intelligence Dashboard</p>
           </div>
         </div>
-
-        {/* Form card */}
         <div className="rounded-xl border border-lagoon/30 bg-white shadow-sm shadow-lagoon/10 p-6">
           <h2 className="mb-5 text-sm font-semibold text-night">Đăng nhập</h2>
           <form onSubmit={handleLogin} className="flex flex-col gap-4">
