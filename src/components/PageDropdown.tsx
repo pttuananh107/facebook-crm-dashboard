@@ -2,6 +2,7 @@
 
 import { ChevronDown, Globe } from "lucide-react";
 import { type Page } from "@/lib/supabase";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface PageDropdownProps {
   pages: Page[];
@@ -11,13 +12,24 @@ interface PageDropdownProps {
 }
 
 export function PageDropdown({ pages, value, onChange, loading }: PageDropdownProps) {
-  const selected = pages.find((p) => p.page_id === value);
+  const { profile } = useAuth();
+
+  const visiblePages =
+    profile?.role === "super_admin"
+      ? pages
+      : pages.filter((p) =>
+          (profile?.assigned_page_ids ?? []).includes(p.page_id)
+        );
+
+  const selected = visiblePages.find((p) => p.page_id === value);
 
   return (
     <div className="flex items-center gap-2">
       <div className="flex items-center gap-1.5 text-lagoon shrink-0">
         <Globe size={14} />
-        <span className="text-xs font-medium hidden sm:inline text-night/60">Fanpage:</span>
+        <span className="text-xs font-medium hidden sm:inline text-night/60">
+          Fanpage:
+        </span>
       </div>
       <div className="relative">
         <select
@@ -28,7 +40,7 @@ export function PageDropdown({ pages, value, onChange, loading }: PageDropdownPr
           style={{ minWidth: 180 }}
         >
           <option value="">Tất cả pages</option>
-          {pages.map((page) => (
+          {visiblePages.map((page) => (
             <option key={page.page_id} value={page.page_id}>
               {page.page_name}
             </option>

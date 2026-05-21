@@ -8,12 +8,10 @@ import {
   Trash2,
   ToggleLeft,
   ToggleRight,
-  ArrowLeft,
   Loader2,
   AlertCircle,
   Globe,
 } from "lucide-react";
-import Link from "next/link";
 import clsx from "clsx";
 
 export default function AdminPage() {
@@ -50,7 +48,7 @@ export default function AdminPage() {
       page_name: form.page_name.trim(),
       access_token: form.access_token.trim() || null,
       is_active: true,
-    });
+    } as never);
     if (err) {
       setFormError(err.message);
     } else {
@@ -63,7 +61,7 @@ export default function AdminPage() {
   async function toggleActive(page: Page) {
     await supabase
       .from("pages")
-      .update({ is_active: !page.is_active })
+      .update({ is_active: !page.is_active } as never)
       .eq("page_id", page.page_id);
     setPages((prev) =>
       prev.map((p) =>
@@ -89,15 +87,6 @@ export default function AdminPage() {
           <div>
             <h1 className="text-sm font-bold leading-none text-white">Facebook CRM</h1>
             <p className="mt-0.5 text-xs text-white/50">Quản lý Pages</p>
-          </div>
-          <div className="ml-auto">
-            <Link
-              href="/"
-              className="flex items-center gap-1.5 rounded-lg border border-lagoon/40 bg-lagoon/10 px-3 py-1.5 text-xs font-medium text-lagoon transition hover:bg-lagoon/20"
-            >
-              <ArrowLeft size={12} />
-              Dashboard
-            </Link>
           </div>
         </div>
       </header>
