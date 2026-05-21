@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { useAuth, type UserProfile } from "@/contexts/AuthContext";
 import { usePages } from "@/hooks/usePages";
-import { Users, Save, Loader2, AlertCircle, Mail } from "lucide-react";
+import { Users, Save, Loader2, AlertCircle } from "lucide-react";
 import clsx from "clsx";
 
 const ROLE_LABELS: Record<UserProfile["role"], string> = {
@@ -22,7 +22,6 @@ export default function UsersPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState<string | null>(null);
-  const [sendingReset, setSendingReset] = useState<string | null>(null);
   const [edits, setEdits] = useState<Record<string, Partial<UserProfile>>>({});
 
   useEffect(() => {
@@ -49,20 +48,6 @@ export default function UsersPage() {
       ...prev,
       [userId]: { ...prev[userId], [field]: value },
     }));
-  }
-
-  async function sendResetPassword(user: UserProfile) {
-    if (!confirm(`Gửi email đặt lại mật khẩu cho ${user.email}?`)) return;
-    setSendingReset(user.id);
-    const { error: err } = await supabase.auth.resetPasswordForEmail(user.email, {
-      redirectTo: `${window.location.origin}/reset-password`,
-    });
-    if (err) {
-      alert(`Lỗi: ${err.message}`);
-    } else {
-      alert(`Đã gửi email đặt lại mật khẩu tới ${user.email}`);
-    }
-    setSendingReset(null);
   }
 
   async function saveUser(userId: string) {
@@ -134,9 +119,6 @@ export default function UsersPage() {
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-lagoon/70">
                       Assigned Pages
-                    </th>
-                    <th className="px-4 py-3 text-center text-xs font-semibold uppercase tracking-widest text-lagoon/70">
-                      Reset PW
                     </th>
                     <th className="px-4 py-3 text-center text-xs font-semibold uppercase tracking-widest text-lagoon/70">
                       Lưu
@@ -215,20 +197,6 @@ export default function UsersPage() {
                               ))
                             )}
                           </div>
-                        </td>
-                        <td className="px-4 py-3 text-center">
-                          <button
-                            onClick={() => sendResetPassword(user)}
-                            disabled={sendingReset === user.id}
-                            className="mx-auto flex items-center gap-1.5 rounded-lg border border-sand/50 bg-sand/10 px-3 py-1.5 text-xs font-medium text-night/60 transition hover:bg-sand/20 disabled:cursor-not-allowed disabled:opacity-50"
-                          >
-                            {sendingReset === user.id ? (
-                              <Loader2 size={12} className="animate-spin" />
-                            ) : (
-                              <Mail size={12} />
-                            )}
-                            Gửi
-                          </button>
                         </td>
                         <td className="px-4 py-3 text-center">
                           <button
